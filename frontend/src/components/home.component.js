@@ -61,11 +61,11 @@ export default class Home extends Component {
             <div className='row'>
               <div className='col'>
                 <label>Postcode: </label>
-                <input type="text" required className="form-control" value={this.state.addressPostal} onChange={this.onChangeAddressPostal}/>
+                <input required type="text" name="input-postal" className="form-control" value={this.state.addressPostal} onChange={this.onChangeAddressPostal}/>
               </div>
               <div className='col'>
                 <label>Huisnummer: </label>
-                <input type="text" required className="form-control" value={this.state.addressHouseNum} onChange={this.onChangeAddressHouseNum}/>
+                <input required type="text" name="input-housenumber" className="form-control" value={this.state.addressHouseNum} onChange={this.onChangeAddressHouseNum}/>
               </div>
             </div>
           </div>
