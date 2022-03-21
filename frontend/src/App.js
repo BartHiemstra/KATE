@@ -2,17 +2,19 @@ import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 
-import Navbar from './components/navbar.component';
+import Navbar from './components/header/navbar.component';
 import Home from './components/home.component';
-import HomeTemp from './components/home_temp.component';
+import './App.css';
 
 function App() {
   return (
+    <div>
     <Router>
         <Routes>
-          <Route path='/' exact element={<HomeTemp />} />
+          <Route path='/' exact element={<Home />} />
         </Routes>
     </Router>
+    </div>
   );
 }
 

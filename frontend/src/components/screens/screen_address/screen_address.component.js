@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { Button } from 'react-bootstrap';
+
 import './screen_address.css';
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
@@ -14,6 +14,17 @@ export default class ScreenAddress extends Component {
         this.onSubmit = this.onSubmit.bind(this);
 
         this.state = {
+            search: {
+                address: ''
+            },
+            building: {
+                postal: '',
+                street: '',
+                number: '',
+                year: '',
+                surface: ''
+            },
+
             addressPostal: '',
             addressHouseNum: '',
             buildingInfo: '',
@@ -41,13 +52,16 @@ export default class ScreenAddress extends Component {
         axios.get(BASE_URL + 'address/' + this.state.addressPostal + '/' + this.state.addressHouseNum)
             .then(response => {
                 this.setState({
-                    buildingInfo: 'Gebouwgegevens',
-                    buildingStreet: response.data._embedded.adressen[0].openbareRuimteNaam,
-                    buildingNumber: response.data._embedded.adressen[0].huisnummer,
-                    buildingYear: response.data._embedded.adressen[0].oorspronkelijkBouwjaar,
-                    buildingSurface: response.data._embedded.adressen[0].oppervlakte + ' m2'
+                    building: {
+                        postal: this.state.addressPostal,
+                        street: response.data._embedded.adressen[0].openbareRuimteNaam,
+                        number: response.data._embedded.adressen[0].huisnummer,
+                        year: response.data._embedded.adressen[0].oorspronkelijkBouwjaar,
+                        surface: response.data._embedded.adressen[0].oppervlakte
+                    },
                 })
-                this.scrollRef.current.scrollIntoView()
+                this.props.setBuilding(this.state.building)
+                this.props.showComponent('Properties')
             })
             .catch(error => console.log(error)
             );
@@ -74,14 +88,8 @@ export default class ScreenAddress extends Component {
                         <div className="form-group">
                             <input type="submit" value="Verder" className="btn btn-primary" />
                         </div>
-                        <h5 ref={this.scrollRef}>{this.state.buildingInfo}</h5>
-                        <label>{this.state.buildingStreet} {this.state.buildingNumber}</label>
-                        <br></br>
-                        <label>{this.state.buildingYear}</label>
-                        <br></br>
-                        <label >{this.state.buildingSurface}</label>
                     </form>
-                    <Button onClick={() => this.props.showComponent('Properties')}>Verderr</Button>
+                    {/*<Button onClick={() => this.props.showComponent('Properties')}>Verderr</Button>*/}
                 </div>
             </div>
         )

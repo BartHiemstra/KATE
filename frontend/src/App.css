@@ -1,14 +1,18 @@
-.background-img {
-    background: linear-gradient(to top, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2)), url('../../../../public/img/background.jpg') center no-repeat;
-    background-size: cover;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    filter: blur(8px);
-    z-index: -1;
+/* Font imports */
+@font-face {
+    font-family: 'Avenir';
+    src: local('Avenir'), url(./fonts/avenir_regular.otf) format('truetype');
+}
+@font-face {
+    font-family: 'Avenir';
+    src: local('Avenir'), url(./fonts/avenir_regular.otf) format('truetype');
+}
+@font-face {
+    font-family: 'Avenir';
+    src: local('Avenir'), url(./fonts/avenir_regular.otf) format('truetype');
+}
+
+/* Applying fonts to App */
+body {
+    font-family: "Avenir"
 }

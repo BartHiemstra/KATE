@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
-import axios from 'axios';
+import Fade from 'react-reveal/Fade';
+
+import ScreenAddress from "./screens/screen_address/screen_address.component";
+import ScreenProperties from "./screens/screen_properties/screen_properties.component";
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 
@@ -7,80 +10,32 @@ export default class Home extends Component {
   constructor(props) {
     super(props);
 
-    this.onChangeAddressPostal = this.onChangeAddressPostal.bind(this);
-    this.onChangeAddressHouseNum = this.onChangeAddressHouseNum.bind(this);
-    this.onSubmit = this.onSubmit.bind(this);
-    this.scrollRef = React.createRef()
+    this.showComponent = this.showComponent.bind(this)
+    this.setBuilding = this.setBuilding.bind(this)
 
     this.state = {
-      addressPostal: '',
-      addressHouseNum: '',
-      buildingInfo: '',
-      buildingStreet: '',
-      buildingNumer: '',
-      buildingYear: '',
-      buildingSurface: ''
-    }
+        showItem: 'Address'
+     }
   }
 
-  onChangeAddressPostal(e) {
+  showComponent(component) {
     this.setState({
-      addressPostal: e.target.value
+      showItem: this.state.showItem = component
     })
   }
 
-  onChangeAddressHouseNum(e) {
+  setBuilding(building) {
     this.setState({
-      addressHouseNum: e.target.value
+      building: building
     })
   }
 
-  onSubmit(e) {
-    e.preventDefault();
-    axios.get(BASE_URL + 'address/' + this.state.addressPostal + '/' + this.state.addressHouseNum)
-      .then(response => {
-        this.setState({
-          buildingInfo: 'Gebouwgegevens',
-          buildingStreet: response.data._embedded.adressen[0].openbareRuimteNaam,
-          buildingNumber: response.data._embedded.adressen[0].huisnummer,
-          buildingYear: response.data._embedded.adressen[0].oorspronkelijkBouwjaar,
-          buildingSurface: response.data._embedded.adressen[0].oppervlakte + ' m2'
-        })
-        this.scrollRef.current.scrollIntoView()
-      })
-      .catch(error => console.log(error)
-    );
-  }
-
-  render() { 
+  render() {
+    const { showItem } = this.state;
     return (
-      <div className="container">
-        <br></br>
-        <form onSubmit={this.onSubmit}>
-          <div className="form-group">
-            <div className='row'>
-              <div className='col'>
-                <label>Postcode: </label>
-                <input required type="text" name="input-postal" className="form-control" value={this.state.addressPostal} onChange={this.onChangeAddressPostal}/>
-              </div>
-              <div className='col'>
-                <label>Huisnummer: </label>
-                <input required type="text" name="input-housenumber" className="form-control" value={this.state.addressHouseNum} onChange={this.onChangeAddressHouseNum}/>
-              </div>
-            </div>
-          </div>
-          <br></br>
-          <div className="form-group">
-            <input type="submit" value="Verder" className="btn btn-primary" />
-          </div>
-          <br></br>
-          <h5 ref={this.scrollRef}>{this.state.buildingInfo}</h5>
-          <label>{this.state.buildingStreet} {this.state.buildingNumber}</label>
-          <br></br>
-          <label>{this.state.buildingYear}</label>
-          <br></br>
-          <label >{this.state.buildingSurface}</label>
-        </form>        
+      <div>
+        {showItem === 'Address' && <Fade><ScreenAddress showComponent={this.showComponent} setBuilding={this.setBuilding}/></Fade>}
+        {showItem === 'Properties' && <Fade><ScreenProperties showComponent={this.showComponent} buildingInfo={this.state.building}/></Fade>}
       </div>
     )
   }
