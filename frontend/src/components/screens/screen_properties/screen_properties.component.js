@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { Button } from 'react-bootstrap';
+import './screen_properties.css';
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 
@@ -58,7 +59,7 @@ export default class ScreenProperties extends Component {
 
   render() {
     return (
-      <div className="container vh-100">
+      <div className="container">
         <br></br>
         <form onSubmit={this.onSubmit}>
           <div className="form-group">
@@ -171,10 +172,6 @@ export default class ScreenProperties extends Component {
               <div className='col'>
                 <label>LALALALDSLSLDFKJ: </label>
                 <input required type="text" name="input-postal" className="form-control" value={this.state.addressPostal} onChange={this.onChangeAddressPostal}/>
-              </div>
-              <div className='col'>
-                <label>HuiSDFS:DLFLSDKJSJLDKFsnummer: </label>
-                <input required type="text" name="input-housenumber" className="form-control" value={this.state.addressHouseNum} onChange={this.onChangeAddressHouseNum}/>
               </div>
             </div>
             <div className='row'>

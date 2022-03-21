@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import Fade from 'react-reveal/Fade';
+import { CSSTransition } from 'react-transition-group';
+import './home_temp.css';
 
 import ScreenAddress from "./screens/screen_address/screen_address.component";
 import ScreenProperties from "./screens/screen_properties/screen_properties.component";
@@ -15,6 +17,7 @@ export default class HomeTemp extends Component {
 
     this.state = {
         showItem: 'Address'
+
      }
   }
 
@@ -25,10 +28,10 @@ export default class HomeTemp extends Component {
   render() {
     const { showItem } = this.state;
     return (
-        <div>
-            {showItem === 'Address' && <Fade><ScreenAddress showComponent={this.showComponent}/></Fade>}
-            {showItem === 'Properties' && <Fade><ScreenProperties showComponent={this.showComponent}/></Fade>}
-        </div>
+      <div>
+        {showItem === 'Address' && <Fade><ScreenAddress showComponent={this.showComponent}/></Fade>}
+        {showItem === 'Properties' && <Fade><ScreenProperties showComponent={this.showComponent}/></Fade>}
+      </div>
     )
   }
 }
