@@ -1,22 +1,20 @@
 import React, { Component } from 'react';
+import Autocomplete from "react-google-autocomplete";
 import axios from 'axios';
 
+// Styling sheet import
 import './screen_address.css';
 
+// Environment variables
 const BASE_URL = process.env.REACT_APP_BASE_URL;
+const GOOGLE_API_KEY = process.env.REACT_APP_API_GOOGLE_PLACES;
 
 export default class ScreenAddress extends Component {
     constructor(props) {
         super(props);
 
-        this.onChangeAddressPostal = this.onChangeAddressPostal.bind(this);
-        this.onChangeAddressHouseNum = this.onChangeAddressHouseNum.bind(this);
-        this.onSubmit = this.onSubmit.bind(this);
-
+        // Initialize 'building' object.
         this.state = {
-            search: {
-                address: ''
-            },
             building: {
                 postal: '',
                 street: '',
@@ -24,47 +22,26 @@ export default class ScreenAddress extends Component {
                 year: '',
                 surface: ''
             },
-
-            addressPostal: '',
-            addressHouseNum: '',
-            buildingInfo: '',
-            buildingStreet: '',
-            buildingNumer: '',
-            buildingYear: '',
-            buildingSurface: ''
         }
     }
 
-    onChangeAddressPostal(e) {
-        this.setState({
-            addressPostal: e.target.value
-        })
-    }
-
-    onChangeAddressHouseNum(e) {
-        this.setState({
-            addressHouseNum: e.target.value
-        })
-    }
-
-    onSubmit(e) {
-        e.preventDefault();
-        axios.get(BASE_URL + 'address/' + this.state.addressPostal + '/' + this.state.addressHouseNum)
-            .then(response => {
-                this.setState({
-                    building: {
-                        postal: this.state.addressPostal,
-                        street: response.data._embedded.adressen[0].openbareRuimteNaam,
-                        number: response.data._embedded.adressen[0].huisnummer,
-                        year: response.data._embedded.adressen[0].oorspronkelijkBouwjaar,
-                        surface: response.data._embedded.adressen[0].oppervlakte
-                    },
-                })
-                this.props.setBuilding(this.state.building)
-                this.props.showComponent('Properties')
+    // Fetch building info from backend based on input address.
+    getBuildingInfo(postalCode, houseNumber) {
+        axios.get(BASE_URL + 'address/' + postalCode + '/' + houseNumber)
+        .then(response => {
+            this.setState({
+                building: {
+                    postal: postalCode,
+                    street: response.data._embedded.adressen[0].openbareRuimteNaam,
+                    number: response.data._embedded.adressen[0].huisnummer,
+                    year: response.data._embedded.adressen[0].oorspronkelijkBouwjaar,
+                    surface: response.data._embedded.adressen[0].oppervlakte
+                },
             })
-            .catch(error => console.log(error)
-            );
+            this.props.setBuilding(this.state.building)
+            this.props.showComponent('Properties')
+        })
+        .catch(error => console.log(error));
     }
 
     render() {
@@ -72,24 +49,36 @@ export default class ScreenAddress extends Component {
             <div>
                 <div className='background-img'></div>
                 <div className='container vh-100'>
-                    <form onSubmit={this.onSubmit}>
-                        <div className='form-group'>
-                            <div className='row'>
-                                <div className='col'>
-                                    <label>Postcode: </label>
-                                    <input required type='text' name='input-postal' className='form-control' value={this.state.addressPostal} onChange={this.onChangeAddressPostal} />
-                                </div>
-                                <div className='col'>
-                                    <label>Huisnummer: </label>
-                                    <input required type='text' name='input-housenumber' className="form-control" value={this.state.addressHouseNum} onChange={this.onChangeAddressHouseNum} />
-                                </div>
-                            </div>
+                    <div className='row semi-center'>
+                        <div className='col'>
+                            <Autocomplete
+                                language={'NL'}
+                                options={{ types: ['address'], componentRestrictions: { country: 'nl' } }}
+                                apiKey={ GOOGLE_API_KEY }
+                                placeholder="Straatnaam en huisnummer"
+                                onPlaceSelected={(place) => {
+                                    // When a place is selected, search for postal code and house number in the address_components array.
+                                    let postalCode = null
+                                    let houseNumber = null
+                                    place?.address_components?.forEach(entry => {
+                                        if (entry.types?.[0] === "postal_code") {
+                                            postalCode = entry.long_name.replace(/ /g, '');
+                                        }
+                                        if (entry.types?.[0] === "street_number") {
+                                            houseNumber = entry.long_name;
+                                        }
+                                    })
+                                    // If both address components are found (!null), call getBuildingInfo().
+                                    if(postalCode && houseNumber) {
+                                        this.getBuildingInfo(postalCode, houseNumber)
+                                    }
+                                    // Otherwise, return error message.
+                                    //TODO: Return error message
+                                }}
+                            />
+                            {/*<Button onClick={() => this.props.showComponent('Properties')}>Verderr</Button>*/}
                         </div>
-                        <div className="form-group">
-                            <input type="submit" value="Verder" className="btn btn-primary" />
-                        </div>
-                    </form>
-                    {/*<Button onClick={() => this.props.showComponent('Properties')}>Verderr</Button>*/}
+                    </div>
                 </div>
             </div>
         )

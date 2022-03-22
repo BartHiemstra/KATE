@@ -1,3 +1,4 @@
+/* Blurred background image */
 .background-img {
   background: linear-gradient(to top, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2)), url('../../../../public/img/background.jpg') center no-repeat;
   background-size: cover;
@@ -9,6 +10,51 @@
   left: 0;
   right: 0;
   bottom: 0;
-  filter: blur(8px);
+  filter: blur(10px);
   z-index: -1;
+}
+
+/* Center search bar */
+.semi-center {
+  padding-top: 15rem;
+}
+
+/* Styling of Google Autocomplete */
+.pac-container {
+  font-family: 'Avenir';
+  line-height: 1.5;
+  border-radius: 0.25rem;
+  border: 1px solid #ced4da;
+  appearance: none;
+  background-clip: padding-box;
+  -webkit-appearance: none;
+  transition: #0d6efd .15s ease-in-out, #0d6efd .15s ease-in-out !important;
+  outline: #0d6efd !important;
+}
+.pac-container:after {
+  content: none !important;
+}
+.pac-target-input {
+  width: 100% !important;
+  padding: .75rem .75rem;
+  font-size: 1rem;
+  color: #212529;
+  line-height: 1.5;
+  border-radius: 0.25rem;
+  border: 1px solid #ced4da;
+  appearance: none;
+  background-clip: padding-box;
+  -webkit-appearance: none;
+  transition: #0d6efd .15s ease-in-out, #0d6efd .15s ease-in-out !important;
+  outline: #0d6efd !important;
+}
+.pac-item {
+  font-size: 0.9rem;
+}
+.pac-item-query {
+  font-size: 0.9rem;
+  color: #212529;
+}
+.pac-matched {
+  font-weight: 600;
 }
