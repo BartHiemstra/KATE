@@ -1,22 +1,30 @@
 /* Blurred background image */
 .background-img {
-  background: linear-gradient(to top, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2)), url('../../../../public/img/background.jpg') center no-repeat;
+  background: linear-gradient(to top, rgba(255, 255, 255, 0.0), rgba(255, 255, 255, 0.0)), url('../../../../public/img/background.jpg') no-repeat scroll center top transparent;
   background-size: cover;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  filter: blur(10px);
+  filter: blur(8px);
   z-index: -1;
+  height: 900px;
+}
+
+/* h3 text shadow */
+h3{
+  color: white;
+  text-shadow: 4px 4px 15px rgb(0 0 0 / 0.8);
 }
 
 /* Center search bar */
 .semi-center {
-  padding-top: 15rem;
+  padding-top: 12rem;
+  padding-bottom: 0.5rem;
 }
 
 /* Styling of Google Autocomplete */
@@ -47,6 +55,7 @@
   -webkit-appearance: none;
   transition: #0d6efd .15s ease-in-out, #0d6efd .15s ease-in-out !important;
   outline: #0d6efd !important;
+  box-shadow: 0px 5px 15px rgb(0 0 0 / 0.15);
 }
 .pac-item {
   font-size: 0.9rem;

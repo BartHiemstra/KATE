@@ -12,7 +12,8 @@
     src: local('Avenir Bold'), url(./fonts/avenir_bold.otf) format('truetype');
 }
 
-/* Applying default font to app */
+/* Applying default style to app */
 body {
-    font-family: "Avenir"
+    font-family: "Avenir";
+    background-color: #F6F7FB;
 }
