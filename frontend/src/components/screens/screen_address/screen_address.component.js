@@ -26,7 +26,7 @@ export default class ScreenAddress extends Component {
         }
     }
 
-    // Fetch building info from backend based on input address.
+    // Fetch building info from backend based on input address, then store it in the 'building' object.
     getBuildingInfo(postalCode, houseNumber) {
         axios.get(BASE_URL + 'address/' + postalCode + '/' + houseNumber)
         .then(response => {
@@ -40,7 +40,7 @@ export default class ScreenAddress extends Component {
                     surface: response.data._embedded.adressen[0].oppervlakte
                 },
             })
-            // On success, set the building info in parent class then call for Properties screen.
+            // On success, pass the building info to parent class then call for Properties screen.
             this.props.setBuilding(this.state.building)
             this.props.showComponent('Properties')
         })
@@ -62,7 +62,7 @@ export default class ScreenAddress extends Component {
                                 language={'NL'}
                                 options={{ types: ['address'], componentRestrictions: { country: 'nl' } }}
                                 apiKey={ GOOGLE_API_KEY }
-                                placeholder="Voer een adres in"
+                                placeholder="Straatnaam en huisnummer"
                                 onPlaceSelected={(place) => {
                                     // When a place is selected, search for postal code and house number in the address_components array.
                                     let postalCode = null
