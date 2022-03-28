@@ -27,3 +27,12 @@
 .custom-select:hover {
     cursor: pointer;
 }
+
+.info-img {
+    margin-bottom: 2px;
+    margin-left: 5px;
+}
+
+label {
+    white-space: nowrap;
+}

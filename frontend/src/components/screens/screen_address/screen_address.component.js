@@ -16,6 +16,7 @@ export default class ScreenAddress extends Component {
         // Initialize 'building' object.
         this.state = {
             building: {
+                province: '',
                 postal: '',
                 street: '',
                 number: '',
@@ -27,11 +28,13 @@ export default class ScreenAddress extends Component {
     }
 
     // Fetch building info from backend based on input address, then store it in the 'building' object.
-    getBuildingInfo(postalCode, houseNumber) {
+    //Todo: let backend handle the logic.
+    getBuildingInfo(province, postalCode, houseNumber) {
         axios.get(BASE_URL + 'address/' + postalCode + '/' + houseNumber)
         .then(response => {
             this.setState({
                 building: {
+                    province: province,
                     postal: postalCode,
                     street: response.data._embedded.adressen[0].openbareRuimteNaam,
                     number: response.data._embedded.adressen[0].huisnummer,
@@ -64,10 +67,15 @@ export default class ScreenAddress extends Component {
                                 apiKey={ GOOGLE_API_KEY }
                                 placeholder="Straatnaam en huisnummer"
                                 onPlaceSelected={(place) => {
-                                    // When a place is selected, search for postal code and house number in the address_components array.
+                                    // When a place is selected, search for province, postal code and house number in the address_components array.
+                                    //TODO: Let backend handle the logic
+                                    let province = null
                                     let postalCode = null
                                     let houseNumber = null
                                     place?.address_components?.forEach(entry => {
+                                        if (entry.types?.[0] === "administrative_area_level_1") {
+                                            province = entry.long_name;
+                                        }
                                         if (entry.types?.[0] === "postal_code") {
                                             postalCode = entry.long_name.replace(/ /g, '');
                                         }
@@ -76,8 +84,8 @@ export default class ScreenAddress extends Component {
                                         }
                                     })
                                     // If both address components are found (!null), call getBuildingInfo().
-                                    if(postalCode && houseNumber) {
-                                        this.getBuildingInfo(postalCode, houseNumber)
+                                    if(province && postalCode && houseNumber) {
+                                        this.getBuildingInfo(province, postalCode, houseNumber)
                                     }
                                     // Otherwise, return error message.
                                     //TODO: Return error message

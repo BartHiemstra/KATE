@@ -1,15 +1,15 @@
 /* Font imports */
 @font-face {
     font-family: 'Avenir';
-    src: local('Avenir'), url(./fonts/avenir_regular.otf) format('truetype');
+    src: local('Avenir'), url(./assets/fonts/avenir_regular.otf) format('truetype');
 }
 @font-face {
     font-family: 'Avenir Semibold';
-    src: local('Avenir Semibold'), url(./fonts/avenir_semibold.otf) format('truetype');
+    src: local('Avenir Semibold'), url(./assets/fonts/avenir_semibold.otf) format('truetype');
 }
 @font-face {
     font-family: 'Avenir Bold';
-    src: local('Avenir Bold'), url(./fonts/avenir_bold.otf) format('truetype');
+    src: local('Avenir Bold'), url(./assets/fonts/avenir_bold.otf) format('truetype');
 }
 
 /* Applying default style to app */
