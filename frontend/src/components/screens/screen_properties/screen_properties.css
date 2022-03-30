@@ -4,6 +4,24 @@
     padding-bottom: 0.5rem;
 }
 
+/* Apply custom suffix text to bootstrap input form */
+.suffix, .suffix-longer {
+    margin-top: 5px;
+    margin-left: 40px;
+    position: absolute;
+    font-size: 1.1rem;
+    user-select: none;
+    -webkit-user-select: none;    
+    -moz-user-select: none;
+    -ms-user-select: none;
+    pointer-events: none;
+}
+.suffix-longer {
+    margin-left: 50px;
+}
+
+/* Different padding types */
+
 .padding-top-1 {
     padding-top: 1rem;
 }
@@ -24,13 +42,14 @@
     padding-bottom: 2rem;
 }
 
-.custom-select:hover {
-    cursor: pointer;
+/* Positioning of info-button image */
+.info-img {
+    margin-bottom: 3px;
+    margin-left: 5px;
 }
 
-.info-img {
-    margin-bottom: 2px;
-    margin-left: 5px;
+.custom-select:hover {
+    cursor: pointer;
 }
 
 label {
