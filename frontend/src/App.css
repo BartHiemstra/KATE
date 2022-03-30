@@ -12,8 +12,15 @@
     src: local('Avenir Bold'), url(./assets/fonts/avenir_bold.otf) format('truetype');
 }
 
-/* Applying default style to app */
+/* Apply default background and font to app body */
 body {
     font-family: "Avenir";
     background-color: #FAFAFD;
 }
+
+/* Apply shadow to input fields */
+/*
+input, select {
+    box-shadow: 0px 4px 15px rgb(0 0 0 / 0.05);
+}
+*/
