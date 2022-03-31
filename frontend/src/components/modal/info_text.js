@@ -1,7 +1,7 @@
 const INFO_TEXT = [
     {
-        'title': 'Verdiepingen',
-        'body': 'Aantal verdiepingen waaruit het pand bestaat, inclusief begane grond.'
+        'title': 'Algemeen',
+        'body': 'Algemene gegevens. Bouwjaar en GBO zijn afkomstig van het Kadaster. Het BVO wordt geschat op basis van het GBO.'
     },
     {
         'title': 'Verdiepingshoogte',

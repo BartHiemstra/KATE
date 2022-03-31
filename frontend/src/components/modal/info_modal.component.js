@@ -15,7 +15,7 @@ export default class InfoModal extends Component {
 
     render(){
         return (
-            <Modal show={this.props.show} centered>
+            <Modal show={this.props.show} centered style={{ whiteSpace: 'break-spaces' }}>
             <Modal.Header>
                 <Modal.Title>{info_text[0].title}</Modal.Title>
             </Modal.Header>

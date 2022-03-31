@@ -80,7 +80,7 @@ export default class ScreenProperties extends Component {
           </div>
           <div className='row padding-top-3'>
             <div className='col'>
-              <h4>Algemene gegevens
+              <h4>Algemeen
                 <a href='#' onClick={this.onShowInfoModal}><img className='info-img' src={image} height={25} width={25}></img></a>
               </h4>                
               <label>Bouwjaar</label>
@@ -95,11 +95,11 @@ export default class ScreenProperties extends Component {
           </div>
           <div className='row padding-top-1'>
             <div className='col'>
-              <label>Aantal verdiepingen</label>
+              <label>Aantal bouwlagen</label>
               <input autoFocus type='number' min='0' max='99' step='1' value={this.state.inputFloorAmount} onChange={this.onChangeFloorAmount} name="input-floorAmount" className="form-control"/>
             </div>
             <div className='col'>
-              <label>Verdiepingshoogte</label>
+              <label>Bouwlaaghoogte</label>
               <div className='suffix'>m</div>
               <input type='number' min='3.0' max='9.9' step='0.1' value={this.state.inputFloorHeight} onChange={this.onChangeFloorHeight} name="input-floorHeight" className="form-control"/>
             </div>
@@ -109,7 +109,7 @@ export default class ScreenProperties extends Component {
               <h4>Fundering</h4>
               <label>Type</label>
               <select onChange={this.onChangeFoundationType} className="form-control custom-select" name="input-foundationType">
-              <option value=''></option>
+                <option value=''></option>
                 <option value='Op staal'>Fundering op staal</option>
                 <option value='Betonpalen'>Betonpalen</option>
                 <option value='Houten palen'>Houten palen</option>
@@ -153,31 +153,23 @@ export default class ScreenProperties extends Component {
                 <option value='Hout'>Hout</option>
               </select>
             </div>
-            <div className='row padding-top-1'>
-              <div className='col'>
-                <label>Type verdiepingsvloeren</label>
-                <select onChange={this.onChangeSupport} className="form-control custom-select" name="input-supportType">
-                  <option value=''></option>
-                  <option value='Beton (Gestort)'>Beton (Gestort)</option>
-                  <option value='Beton (Prefab)'>Beton (Prefab)</option>
-                  <option value='Cellenbeton'>Cellenbeton</option>
-                  <option value='Keramisch'>Keramisch</option>
-                  <option value='Staal'>Staal</option>
-                  <option value='Hout'>Hout</option>
-                </select>
-              </div>
-            </div>
-            <div className='row padding-top-1'>
-              <div className='col'>
-                <label>Vloerafwerking</label>
-                <select onChange={this.onChangeSupport} className="form-control custom-select" name="input-supportType">
-                  <option value=''></option>
-                  
-                </select>
-              </div>
+          </div>
+          <div className='row padding-top-3'>
+            <div className='col'>
+              <h4>Vloeren</h4>
+              <label>Type begane grondvloer</label>
+              <select onChange={this.onChangeSupport} className="form-control custom-select" name="input-supportType">
+                <option value=''></option>
+                <option value='Beton (Gestort)'>Beton (Gestort)</option>
+                <option value='Beton (Prefab)'>Beton (Prefab)</option>
+                <option value='Cellenbeton'>Cellenbeton</option>
+                <option value='Keramisch'>Keramisch</option>
+                <option value='Staal'>Staal</option>
+                <option value='Hout'>Hout</option>
+              </select>
             </div>
           </div>
-          <div className='padding-bottom-1'></div>
+          <div className='padding-bottom-2'></div>
         </div>
       </div>
     )
