@@ -1,6 +1,10 @@
 #server
 server.js
 
+#keys
+fullchain.pem
+privkey.pem
+
 # dependencies
 /node_modules
 /.pnp
