@@ -142,7 +142,7 @@ export default class ScreenProperties extends Component {
           <div className='row padding-top-3'>
             <div className='col'>
               <h4>Vloeren</h4>
-              <label>Type begane grondvloer</label>
+              <label>Type constructievloer</label>
               <select onChange={this.onChangeSupport} className="form-control custom-select" name="input-supportType">
                 <option value=''></option>
                 <option value='Beton (Gestort)'>Beton (Gestort)</option>
@@ -154,19 +154,74 @@ export default class ScreenProperties extends Component {
               </select>
             </div>
           </div>
-          <div className='row padding-top-3'>
+          <div className='row padding-top-1'>
             <div className='col'>
-              <h4>Vloeren</h4>
-              <label>Type begane grondvloer</label>
+              <label>Type dekvloer</label>
               <select onChange={this.onChangeSupport} className="form-control custom-select" name="input-supportType">
                 <option value=''></option>
-                <option value='Beton (Gestort)'>Beton (Gestort)</option>
-                <option value='Beton (Prefab)'>Beton (Prefab)</option>
-                <option value='Cellenbeton'>Cellenbeton</option>
-                <option value='Keramisch'>Keramisch</option>
+                <option value='Beton'>Beton (Gestort)</option>
+                <option value='Zandcement'>Zandcement</option>
+                <option value='Anhydriet'>Anhydriet</option>
+                <option value='Magnesiet'>Magnesiet</option>
+                <option value='Hout'>Hout</option>
+                <option value='Asfalt'>Asfalt</option>
+              </select>
+            </div>
+          </div>
+          <div className='row padding-top-1'>
+            <div className='col'>
+              <label>Type afwerking</label>
+              <select onChange={this.onChangeSupport} className="form-control custom-select" name="input-supportType">
+                <option value=''></option>
+                <option value='Gietvloer'>Gietvloer</option>
+                <option value='Tapijt'>Tapijt</option>
+                <option value='Hout (parket)'>Hout (parket)</option>
+                <option value='PVC'>PVC</option>
+                <option value='Linoleum'>Linoleum</option>
+                <option value='Laminaat'>Laminaat</option>
+                <option value='Natuursteen'>Natuursteen</option>
+              </select>
+            </div>
+          </div>
+          <div className='row padding-top-3'>
+            <div className='col'>
+              <h4>Gevel</h4>
+              <label>Type gevelbekleding</label>
+              <select onChange={this.onChangeSupport} className="form-control custom-select" name="input-supportType">
+                <option value=''></option>
+                <option value='Metselwerk'>Metselwerk</option>
+                <option value='Beton'>Beton</option>
                 <option value='Staal'>Staal</option>
+                <option value='Glas'>Glas</option>
+                <option value='Aluminium'>Aluminium</option>
+                <option value='Natuursteen'>Natuursteen</option>
+                <option value='Kunststof'>Kunststof</option>
+                <option value='Tegelwerk'>Tegelwerk</option>
                 <option value='Hout'>Hout</option>
               </select>
+            </div>
+          </div>
+          <div className='row padding-top-1'>
+            <div className='col'>
+              <label>Type kozijn</label>
+              <select onChange={this.onChangeSupport} className="form-control custom-select" name="input-supportType">
+                <option value=''></option>
+                <option value='Staal'>Staal</option>
+                <option value='Aluminium'>Aluminium</option>
+                <option value='Hout'>Hout</option>
+                <option value='Kunststof'>Kunststof</option>
+              </select>
+            </div>
+          </div>
+          <div className='row padding-top-1'>
+            <div className='col'>
+              <label>Percentage glas</label>
+              <input type='number' min='0' max='100' step='1' name="input-floorAmount" className="form-control"/>
+            </div>
+          </div>
+          <div className='row padding-top-2'>
+            <div className='col'>
+              <button type="button" className="btn btn-primary">Bereken restwaarde</button>
             </div>
           </div>
           <div className='padding-bottom-2'></div>

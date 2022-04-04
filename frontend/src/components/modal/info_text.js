@@ -1,7 +1,7 @@
 const INFO_TEXT = [
     {
         'title': 'Algemeen',
-        'body': 'Algemene gegevens. Bouwjaar en GBO zijn afkomstig van het Kadaster. Het BVO wordt geschat op basis van het GBO.'
+        'body': 'Algemene gegevens. Bouwjaar en GBO zijn afkomstig van het Kadaster.'
     },
     {
         'title': 'Verdiepingshoogte',
