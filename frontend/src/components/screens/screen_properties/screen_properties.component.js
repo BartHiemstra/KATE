@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
 import Fade from 'react-reveal/Fade';
-import axios from 'axios';
 
 import image from '../../../assets/images/icon_info.png';
 import InfoModal from '../../modal/info_modal.component';
-import './screen_properties.css';
 
-const BASE_URL = process.env.REACT_APP_BASE_URL;
+import './screen_properties.css';
 
 export default class ScreenProperties extends Component {
   constructor(props) {
@@ -19,6 +17,8 @@ export default class ScreenProperties extends Component {
     
     this.onShowInfoModal = this.onShowInfoModal.bind(this);
     this.onCloseInfoModel = this.onCloseInfoModel.bind(this);
+
+    this.onCalculate = this.onCalculate.bind(this);
 
     this.state = {
       showModal: false,
@@ -67,6 +67,10 @@ export default class ScreenProperties extends Component {
 
   onCloseInfoModel() { 
     this.setState({ showModal: false })
+  }
+
+  onCalculate() {
+    this.props.showComponent('Results')
   }
 
   render() {
@@ -221,7 +225,7 @@ export default class ScreenProperties extends Component {
           </div>
           <div className='row padding-top-2'>
             <div className='col'>
-              <button type="button" className="btn btn-primary">Bereken restwaarde</button>
+              <button type="button" onClick={this.onCalculate} className="btn btn-primary">Bereken restwaarde</button>
             </div>
           </div>
           <div className='padding-bottom-2'></div>

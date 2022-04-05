@@ -3,15 +3,11 @@ import Fade from 'react-reveal/Fade';
 
 import ScreenAddress from "./screens/screen_address/screen_address.component";
 import ScreenProperties from "./screens/screen_properties/screen_properties.component";
-import ScreenProperties from "./screens/screen_results/screen_results.component";
+import ScreenResults from "./screens/screen_results/screen_results.component";
 
 export default class Home extends Component {
   constructor(props) {
     super(props);
-
-    // Store environment variables in props for other components to use.
-    this.API_BASE_URL = process.env.REACT_APP_BASE_URL;
-    this.GOOGLE_API_KEY = process.env.REACT_APP_API_GOOGLE_PLACES;
 
     // Bind the showComponent() and setBuilting() methods so that they can be called.
     this.showComponent = this.showComponent.bind(this)

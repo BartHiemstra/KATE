@@ -2,11 +2,10 @@ import React, { Component } from 'react';
 import Autocomplete from "react-google-autocomplete";
 import axios from 'axios';
 
-// Styling sheet import
 import './screen_address.css';
 
-// Environment variables
-const BASE_URL = process.env.REACT_APP_BASE_URL;
+// Fetch API-related data from environment file.
+const API_BASE_URL = process.env.REACT_APP_BASE_URL;
 const GOOGLE_API_KEY = process.env.REACT_APP_API_GOOGLE_PLACES;
 
 export default class ScreenAddress extends Component {
@@ -30,7 +29,7 @@ export default class ScreenAddress extends Component {
     // Fetch building info from backend based on input address, then store it in the 'building' object.
     //Todo: let backend handle the logic.
     getBuildingInfo(province, postalCode, houseNumber) {
-        axios.get(BASE_URL + 'address/' + postalCode + '/' + houseNumber)
+        axios.get(API_BASE_URL + 'address/' + postalCode + '/' + houseNumber)
         .then(response => {
             this.setState({
                 building: {
