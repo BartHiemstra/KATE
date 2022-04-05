@@ -15,13 +15,13 @@ export default class ScreenProperties extends Component {
       <div>
         <div className='container vh-100'>
           <div className='row padding-top-2 text-center'>
-            <h2>Berekende restwaarde</h2>
+            <h2>Materiële restwaarde</h2>
             <div className='padding-top-1'></div>
             <h5>{this.props.buildingInfo.street} {this.props.buildingInfo.number}</h5>
             <h6>{this.props.buildingInfo.postal}, {this.props.buildingInfo.city}, {this.props.buildingInfo.province}</h6>
           </div>
           <div className='row padding-top-3'>
-            <h6>De berekende restwaarde is opgebouwd uit de volgende elementen:</h6>
+            <h6>De berekende materiële restwaarde voor dit pand is opgebouwd uit de volgende elementen:</h6>
             <Accordion defaultActiveKey="0">
               <Accordion.Item eventKey="0">
                 <Accordion.Header>Fundering</Accordion.Header>
