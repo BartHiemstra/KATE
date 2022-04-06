@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Accordion from 'react-bootstrap/Accordion';
+import { Accordion, Table } from 'react-bootstrap';
 import Fade from 'react-reveal/Fade';
 
 import './screen_results.css';
@@ -7,7 +7,7 @@ import './screen_results.css';
 export default class ScreenProperties extends Component {
   constructor(props) {
     super(props);
-
+    
   }
 
   render() {
@@ -21,30 +21,51 @@ export default class ScreenProperties extends Component {
             <h6>{this.props.buildingInfo.postal}, {this.props.buildingInfo.city}, {this.props.buildingInfo.province}</h6>
           </div>
           <div className='row padding-top-3'>
-            <h6>De berekende materiële restwaarde voor dit pand is opgebouwd uit de volgende elementen:</h6>
-            <Accordion defaultActiveKey="0">
+            <h6>De gegeven materiële restwaarde voor dit pand is opgebouwd uit de volgende elementen:</h6>
+            <Accordion alwaysOpen>
               <Accordion.Item eventKey="0">
                 <Accordion.Header>Fundering</Accordion.Header>
                 <Accordion.Body>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-                    veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-                    commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-                    velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-                    cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id
-                    est laborum.
+                <Table responsive style={{ whiteSpace: 'nowrap' }}>
+                  <thead>
+                    <tr>
+                      <th>Onderdeel</th>
+                      <th>Materiaal</th>
+                      <th>Aantal</th>
+                      <th>Totaal</th>
+                      <th>Restwaarde</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>Palen</td>
+                      <td>Beton</td>
+                      <td>22</td>
+                      <td>350 m3</td>
+                      <td >€ 400,50</td>
+                    </tr>
+                    <tr>
+                      <td>Balken</td>
+                      <td>Beton</td>
+                      <td>25</td>
+                      <td>250 m3</td>
+                      <td>€ 400,50</td>
+                  </tr>
+                  <tr>
+                      <td><b>Totaal</b></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td><b>€ 801,30</b></td>
+                  </tr>
+                </tbody>
+              </Table>
                 </Accordion.Body>
               </Accordion.Item>
               <Accordion.Item eventKey="1">
                 <Accordion.Header>Hoofdconstructie</Accordion.Header>
                 <Accordion.Body>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-                    veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-                    commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-                    velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-                    cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id
-                    est laborum.
+                    -
                 </Accordion.Body>
               </Accordion.Item>
             </Accordion>
