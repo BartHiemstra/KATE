@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Accordion, Table } from 'react-bootstrap';
+import { Accordion, Button, Table } from 'react-bootstrap';
 import Fade from 'react-reveal/Fade';
 
 import './screen_results.css';
@@ -8,6 +8,11 @@ export default class ScreenProperties extends Component {
   constructor(props) {
     super(props);
     
+    this.onReturn = this.onReturn.bind(this);
+  }
+
+  onReturn() {
+    this.props.showComponent('Properties')
   }
 
   render() {
@@ -65,10 +70,16 @@ export default class ScreenProperties extends Component {
               <Accordion.Item eventKey="1">
                 <Accordion.Header>Hoofdconstructie</Accordion.Header>
                 <Accordion.Body>
-                    -
+                    Table 2
                 </Accordion.Body>
               </Accordion.Item>
             </Accordion>
+          </div>
+          <div className='row padding-top-2'>
+            <div className='col'>
+              <Button variant="outline-primary" onClick={this.onReturn}>Vorige</Button>
+              <Button variant="primary">Opslaan als PDF</Button>
+            </div>
           </div>
         </div>
       </div>

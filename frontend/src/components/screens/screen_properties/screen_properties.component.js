@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Button } from 'react-bootstrap';
 import Fade from 'react-reveal/Fade';
 
 import image from '../../../assets/images/icon_info.png';
@@ -19,6 +20,7 @@ export default class ScreenProperties extends Component {
     this.onCloseInfoModel = this.onCloseInfoModel.bind(this);
 
     this.onCalculate = this.onCalculate.bind(this);
+    this.onReturn = this.onReturn.bind(this);
 
     this.state = {
       showModal: false,
@@ -71,6 +73,10 @@ export default class ScreenProperties extends Component {
 
   onCalculate() {
     this.props.showComponent('Results')
+  }
+
+  onReturn() {
+    this.props.showComponent('Address')
   }
 
   render() {
@@ -225,7 +231,8 @@ export default class ScreenProperties extends Component {
           </div>
           <div className='row padding-top-2'>
             <div className='col'>
-              <button type="button" onClick={this.onCalculate} className="btn btn-primary">Bereken restwaarde</button>
+              <Button variant="outline-primary" onClick={this.onReturn}>Vorige</Button>
+              <Button variant="primary" onClick={this.onCalculate}>Bereken restwaarde</Button>
             </div>
           </div>
           <div className='padding-bottom-2'></div>
