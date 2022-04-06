@@ -61,6 +61,7 @@ export default class ScreenAddress extends Component {
                     <div className='row'>
                         <div className='col'>
                             <Autocomplete
+                                autoFocus={true}
                                 language={'NL'}
                                 options={{ types: ['address'], componentRestrictions: { country: 'nl' } }}
                                 apiKey={ GOOGLE_API_KEY }
