@@ -10,8 +10,8 @@ router.route('/:postalCode/:houseNumber').get((req, res) => {
         'Accept-Crs': 'epsg:28992'
       }
     })
-    .then(response => res.send(response.data))
-    .catch(err => console.log('Error: ' + err)); //TODO: Respond with error code
+  .then(response => res.send(response.data))
+  .catch(err => console.log('Error: ' + err)); //TODO: Respond with error code
 });
 
 module.exports = router;

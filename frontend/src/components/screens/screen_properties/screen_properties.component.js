@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Button } from 'react-bootstrap';
+import axios from 'axios';
 import Fade from 'react-reveal/Fade';
 
 import image from '../../../assets/images/icon_info.png';
@@ -7,14 +8,19 @@ import InfoModal from '../../modal/info_modal.component';
 
 import './screen_properties.css';
 
+const API_BASE_URL = process.env.REACT_APP_BASE_URL;
+
 export default class ScreenProperties extends Component {
   constructor(props) {
     super(props);
 
+    this.onChangeLength = this.onChangeLength.bind(this);
+    this.onChangeWidth = this.onChangeWidth.bind(this);
     this.onChangeFloorAmount = this.onChangeFloorAmount.bind(this);
     this.onChangeFloorHeight = this.onChangeFloorHeight.bind(this);
     this.onChangeFoundationType = this.onChangeFoundationType.bind(this);
     this.onChangeFoundationDepth = this.onChangeFoundationDepth.bind(this);
+    this.onChangeSupport = this.onChangeSupport.bind(this);
     
     this.onShowInfoModal = this.onShowInfoModal.bind(this);
     this.onCloseInfoModel = this.onCloseInfoModel.bind(this);
@@ -25,11 +31,24 @@ export default class ScreenProperties extends Component {
     this.state = {
       showModal: false,
 
+      inputLength: '',
+      inputWidth: '',
       inputFloorAmount: '',
       inputFloorHeight: '',
       inputFoundationType: '',
       inputFoundationDepth: '',
+      inputSupportType: ''
     }
+  }
+
+  onChangeLength(e) {
+    var length = e.target.value;
+    this.setState({ inputLength: length })
+  }
+
+  onChangeWidth(e) {
+    var width = e.target.value;
+    this.setState({ inputWidth: width })
   }
 
   onChangeFloorAmount(e) {
@@ -63,6 +82,11 @@ export default class ScreenProperties extends Component {
     this.setState({ inputFoundationDepth: foundationDepth })
   }
 
+  onChangeSupport(e) {
+    var supportType = e.target.value;
+    this.setState({inputSupportType: supportType })
+  }
+
   onShowInfoModal() {
     this.setState({ showModal: true })
   }
@@ -72,7 +96,24 @@ export default class ScreenProperties extends Component {
   }
 
   onCalculate() {
-    this.props.showComponent('Results')
+    axios.get(API_BASE_URL + 'calculation/calculate', { 
+      params: {
+        surface: this.props.buildingInfo.surface,
+        length: this.state.inputLength,
+        width: this.state.inputWidth,
+        floorAmount: this.state.inputFloorAmount,
+        floorHeight: this.state.inputFloorHeight,
+        foundationType: 'Fundering.type.' + this.state.inputFoundationType,
+        foundationDepth: this.state.inputFoundationDepth,
+        supportType: 'Hoofddraagconstructie.type.' + this.state.inputSupportType
+    }})
+    .then(response => {        
+        // On success, pass the building value to parent class then call for Results screen.
+        console.log(response);
+        this.props.setResidualValue(response.data)
+        this.props.showComponent('Results')
+    })
+    .catch(error => console.log(error));
   }
 
   onReturn() {
@@ -80,6 +121,7 @@ export default class ScreenProperties extends Component {
   }
 
   render() {
+    //TODO: Fill the dropdown menus with options based on API GET request instead of manually in html.
     return (
       <div>
         <InfoModal show={this.state.showModal} onCloseInfoModel={this.onCloseInfoModel}></InfoModal>
@@ -105,8 +147,20 @@ export default class ScreenProperties extends Component {
           </div>
           <div className='row padding-top-1'>
             <div className='col'>
+              <label>Lengte</label>
+              <div className='suffix-longer'>m</div>
+              <input autoFocus type='number' min='0' max='1000' step='1' value={this.state.inputLength} onChange={this.onChangeLength} name="input-length" className="form-control"/>
+            </div>
+            <div className='col'>
+              <label>Breedte</label>
+              <div className='suffix-longer'>m</div>
+              <input type='number' min='0' max='1000' step='1' value={this.state.inputWidth} onChange={this.onChangeWidth} name="input-width" className="form-control"/>
+            </div>
+          </div>
+          <div className='row padding-top-1'>
+            <div className='col'>
               <label>Aantal bouwlagen</label>
-              <input autoFocus type='number' min='0' max='99' step='1' value={this.state.inputFloorAmount} onChange={this.onChangeFloorAmount} name="input-floorAmount" className="form-control"/>
+              <input type='number' min='0' max='99' step='1' value={this.state.inputFloorAmount} onChange={this.onChangeFloorAmount} name="input-floorAmount" className="form-control"/>
             </div>
             <div className='col'>
               <label>Bouwlaaghoogte</label>

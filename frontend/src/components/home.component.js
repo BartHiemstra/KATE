@@ -9,9 +9,10 @@ export default class Home extends Component {
   constructor(props) {
     super(props);
 
-    // Bind the showComponent() and setBuilting() methods so that they can be called.
+    // Bind the showComponent(), setBuilting() and setResidualValue() methods so that they can be called from the (child component) screens.
     this.showComponent = this.showComponent.bind(this)
     this.setBuilding = this.setBuilding.bind(this)
+    this.setResidualValue = this.setResidualValue.bind(this)
 
     // Set the state of showItem, which determines which of the screens gets shown.
     this.state = {
@@ -33,6 +34,13 @@ export default class Home extends Component {
     })
   }
 
+  // Method to set the residual value of selected building.
+  setResidualValue(residualValue) {
+    this.setState({
+      residualValue: residualValue
+    })
+  }
+
   render() {
     // Get value of showItem..
     const { showItem } = this.state;
@@ -40,9 +48,18 @@ export default class Home extends Component {
     // ..And show the corresponding screen
     return (
       <div>
-        {showItem === 'Address' && <Fade><ScreenAddress showComponent={this.showComponent} setBuilding={this.setBuilding}/></Fade>}
-        {showItem === 'Properties' && <Fade><ScreenProperties showComponent={this.showComponent} buildingInfo={this.state.building}/></Fade>}
-        {showItem === 'Results' && <Fade><ScreenResults showComponent={this.showComponent} buildingInfo={this.state.building}/></Fade>}
+        {showItem === 'Address' && 
+          <Fade>
+            <ScreenAddress showComponent={this.showComponent} setBuilding={this.setBuilding}/>
+          </Fade>}
+        {showItem === 'Properties' && 
+          <Fade>
+            <ScreenProperties showComponent={this.showComponent} buildingInfo={this.state.building} setResidualValue={this.setResidualValue}/>
+          </Fade>}
+        {showItem === 'Results' &&
+          <Fade>
+            <ScreenResults showComponent={this.showComponent} buildingInfo={this.state.building} residualValue={this.state.residualValue}/>
+          </Fade>}
       </div>
     )
   }

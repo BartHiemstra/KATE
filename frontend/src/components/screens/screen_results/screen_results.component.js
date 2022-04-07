@@ -1,18 +1,35 @@
 import React, { Component } from 'react';
 import { Accordion, Button, Table } from 'react-bootstrap';
-import Fade from 'react-reveal/Fade';
+import axios from 'axios';
 
 import './screen_results.css';
+
+const API_BASE_URL = process.env.REACT_APP_BASE_URL;
 
 export default class ScreenProperties extends Component {
   constructor(props) {
     super(props);
     
     this.onReturn = this.onReturn.bind(this);
+    this.pushAPI = this.pushAPI.bind(this);
   }
 
   onReturn() {
     this.props.showComponent('Properties')
+  }
+
+  //Testing API
+  pushAPI() {
+    const material = {
+      name: 'Hout',
+      componentName: 'Hoofddraagconstructie',
+      labelName: 'type',
+      unitType: 'm3',
+      pricePerUnit: 5.50
+    }
+
+    axios.get(API_BASE_URL + 'materials/add', material)
+      .then(result => console.log(result.data));
   }
 
   render() {
@@ -31,46 +48,56 @@ export default class ScreenProperties extends Component {
               <Accordion.Item eventKey="0">
                 <Accordion.Header>Fundering</Accordion.Header>
                 <Accordion.Body>
-                <Table responsive style={{ whiteSpace: 'nowrap' }}>
-                  <thead>
-                    <tr>
-                      <th>Onderdeel</th>
-                      <th>Materiaal</th>
-                      <th>Aantal</th>
-                      <th>Totaal</th>
-                      <th>Restwaarde</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>Palen</td>
-                      <td>Beton</td>
-                      <td>22</td>
-                      <td>350 m3</td>
-                      <td >€ 400,50</td>
-                    </tr>
-                    <tr>
-                      <td>Balken</td>
-                      <td>Beton</td>
-                      <td>25</td>
-                      <td>250 m3</td>
-                      <td>€ 400,50</td>
-                  </tr>
-                  <tr>
-                      <td><b>Totaal</b></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td><b>€ 801,30</b></td>
-                  </tr>
-                </tbody>
-              </Table>
+                  <Table responsive style={{ whiteSpace: 'nowrap' }}>
+                    <thead>
+                      <tr>
+                        <th>Onderdeel</th>
+                        <th>Materiaal</th>
+                        <th>Aantal</th>
+                        <th>Totaal</th>
+                        <th>Restwaarde</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>{this.props.residualValue.foundationPikes.name}</td>
+                        <td>{this.props.residualValue.foundationPikes.material}</td>
+                        <td>{Math.round(this.props.residualValue.foundationPikes.amount)}</td>
+                        <td>{Math.round(this.props.residualValue.foundationPikes.total)} {this.props.residualValue.foundationPikes.unitType}</td>
+                        <td>€ {parseFloat(this.props.residualValue.foundationPikes.value).toFixed(2)}</td>
+                      </tr>
+                      <tr>
+                        <td>{this.props.residualValue.foundationBeams.name}</td>
+                        <td>{this.props.residualValue.foundationBeams.material}</td>
+                        <td>{Math.round(this.props.residualValue.foundationBeams.amount)}</td>
+                        <td>{Math.round(this.props.residualValue.foundationBeams.total)} {this.props.residualValue.foundationBeams.unitType}</td>
+                        <td>€ {parseFloat(this.props.residualValue.foundationBeams.value).toFixed(2)}</td>
+                      </tr>
+                    </tbody>
+                  </Table>
                 </Accordion.Body>
               </Accordion.Item>
               <Accordion.Item eventKey="1">
-                <Accordion.Header>Hoofdconstructie</Accordion.Header>
+                <Accordion.Header>Hoofddraagconstructie</Accordion.Header>
                 <Accordion.Body>
-                    Table 2
+                <Table responsive style={{ whiteSpace: 'nowrap' }}>
+                    <thead>
+                      <tr>
+                        <th>Onderdeel</th>
+                        <th>Materiaal</th>
+                        <th>Totaal</th>
+                        <th>Restwaarde</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>{this.props.residualValue.supportType.name}</td>
+                        <td>{this.props.residualValue.supportType.material}</td>
+                        <td>{Math.round(this.props.residualValue.supportType.total)} {this.props.residualValue.supportType.unitType}</td>
+                        <td>€ {parseFloat(this.props.residualValue.supportType.value).toFixed(2)}</td>
+                      </tr>
+                    </tbody>
+                  </Table>
                 </Accordion.Body>
               </Accordion.Item>
             </Accordion>
@@ -78,7 +105,7 @@ export default class ScreenProperties extends Component {
           <div className='row padding-top-2'>
             <div className='col'>
               <Button variant="outline-primary" onClick={this.onReturn}>Vorige</Button>
-              <Button variant="primary">Opslaan als PDF</Button>
+              <Button variant="primary" onClick={this.pushAPI}>Opslaan als PDF</Button>
             </div>
           </div>
         </div>
