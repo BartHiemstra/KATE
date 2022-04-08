@@ -31,13 +31,13 @@ export default class ScreenProperties extends Component {
     this.state = {
       showModal: false,
 
-      inputLength: '',
-      inputWidth: '',
-      inputFloorAmount: '',
-      inputFloorHeight: '',
-      inputFoundationType: '',
-      inputFoundationDepth: '',
-      inputSupportType: ''
+      inputLength: (typeof inputLength === 'undefined') ? '' : this.props.inputValues.inputLength,
+      inputWidth: (typeof inputWidth === 'undefined') ? '' : this.props.inputValues.inputWidth,
+      inputFloorAmount: (typeof inputFloorAmount === 'undefined') ? '' : this.props.inputValues.inputFloorAmount,
+      inputFloorHeight: (typeof inputFloorHeight === 'undefined') ? '' : this.props.inputValues.inputFloorHeight,
+      inputFoundationType: (typeof inputFoundationType === 'undefined') ? '' : this.props.inputValues.inputFoundationType,
+      inputFoundationDepth: (typeof inputFoundationDepth === 'undefined') ? '' : this.props.inputValues.inputFoundationDepth,
+      inputSupportType: (typeof inputSupportType === 'undefined') ? '' : this.props.inputValues.inputSupportType,
     }
   }
 
@@ -96,6 +96,16 @@ export default class ScreenProperties extends Component {
   }
 
   onCalculate() {
+    var inputValues = {
+      inputLength: this.state.inputLength,
+      inputWidth: this.state.inputWidth,
+      inputFloorAmount: this.state.inputFloorAmount,
+      inputFloorHeight: this.state.inputFloorHeight,
+      inputFoundationType: this.state.foundationType,
+      inputFoundationDepth: this.state.foundationDepth,
+      inputSupportType: this.state.supportType
+    }
+
     axios.get(API_BASE_URL + 'calculation/calculate', { 
       params: {
         surface: this.props.buildingInfo.surface,
@@ -105,11 +115,12 @@ export default class ScreenProperties extends Component {
         floorHeight: this.state.inputFloorHeight,
         foundationType: 'Fundering.type.' + this.state.inputFoundationType,
         foundationDepth: this.state.inputFoundationDepth,
-        supportType: 'Hoofddraagconstructie.type.' + this.state.inputSupportType
+        supportType: 'Hoofddraagconstructie.type.' + this.state.inputSupportType,
     }})
     .then(response => {        
-        // On success, pass the building value to parent class then call for Results screen.
+        // On ssuccess, pass the building value to parent class then call for Results screen.
         console.log(response);
+        this.props.saveInputValues(inputValues);
         this.props.setResidualValue(response.data)
         this.props.showComponent('Results')
     })

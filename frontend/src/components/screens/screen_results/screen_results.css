@@ -1,0 +1,12 @@
+.card {
+    margin-right: 0.8rem;
+    margin-left: 0.8rem;
+}
+
+.row>* {
+    flex-shrink: 1 !important;
+}
+
+.card-columns {
+    column-gap: 0.25rem;
+}

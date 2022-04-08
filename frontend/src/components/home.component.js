@@ -12,11 +12,12 @@ export default class Home extends Component {
     // Bind the showComponent(), setBuilting() and setResidualValue() methods so that they can be called from the (child component) screens.
     this.showComponent = this.showComponent.bind(this)
     this.setBuilding = this.setBuilding.bind(this)
+    this.saveInputValues = this.saveInputValues.bind(this)
     this.setResidualValue = this.setResidualValue.bind(this)
 
     // Set the state of showItem, which determines which of the screens gets shown.
     this.state = {
-        showItem: 'Address'
+        showItem: 'Address',
      }
   }
 
@@ -31,6 +32,13 @@ export default class Home extends Component {
   setBuilding(building) {
     this.setState({
       building: building
+    })
+  }
+
+  // Save user input between-screens.
+  saveInputValues(inputValues) {
+    this.setState({
+      inputValues: inputValues
     })
   }
 
@@ -50,15 +58,26 @@ export default class Home extends Component {
       <div>
         {showItem === 'Address' && 
           <Fade>
-            <ScreenAddress showComponent={this.showComponent} setBuilding={this.setBuilding}/>
+            <ScreenAddress 
+              showComponent={this.showComponent} 
+              setBuilding={this.setBuilding}/>
           </Fade>}
         {showItem === 'Properties' && 
           <Fade>
-            <ScreenProperties showComponent={this.showComponent} buildingInfo={this.state.building} setResidualValue={this.setResidualValue}/>
+            <ScreenProperties 
+              showComponent={this.showComponent} 
+              buildingInfo={this.state.building} 
+              saveInputValues={this.saveInputValues}
+              inputValues={this.state.inputValues}
+              setResidualValue={this.setResidualValue} 
+              residualValue={this.state.residualValue}/>
           </Fade>}
         {showItem === 'Results' &&
           <Fade>
-            <ScreenResults showComponent={this.showComponent} buildingInfo={this.state.building} residualValue={this.state.residualValue}/>
+            <ScreenResults 
+              showComponent={this.showComponent} 
+              buildingInfo={this.state.building} 
+              residualValue={this.state.residualValue}/>
           </Fade>}
       </div>
     )
