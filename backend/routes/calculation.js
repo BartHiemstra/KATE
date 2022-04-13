@@ -8,7 +8,7 @@ router.route('/calculate').get(async function(req, res) {
     // Let CalculationService in the services layer handle the request.
     const calculatedResidualValues = await calculateResidualValue(req.query)
 
-    // Return the outcome response to sender as JSON.
+    // Respond to sender with the outcome as JSON.
     res.json(calculatedResidualValues)
 });
 

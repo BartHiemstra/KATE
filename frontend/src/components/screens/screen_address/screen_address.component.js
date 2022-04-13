@@ -11,39 +11,24 @@ const GOOGLE_API_KEY = process.env.REACT_APP_API_GOOGLE_PLACES;
 export default class ScreenAddress extends Component {
     constructor(props) {
         super(props);
-
-        // Initialize 'building' object.
-        this.state = {
-            building: {
-                province: '',
-                postal: '',
-                street: '',
-                number: '',
-                city: '',
-                year: '',
-                surface: ''
-            },
-        }
     }
 
     // Fetch building info from backend based on input address, then store it in the 'building' object.
-    //Todo: let backend handle the logic.
     getBuildingInfo(province, postalCode, houseNumber) {
         axios.get(API_BASE_URL + 'address/' + postalCode + '/' + houseNumber)
         .then(response => {
-            this.setState({
-                building: {
-                    province: province,
-                    postal: postalCode,
-                    street: response.data._embedded.adressen[0].openbareRuimteNaam,
-                    number: response.data._embedded.adressen[0].huisnummer,
-                    city: response.data._embedded.adressen[0].woonplaatsNaam,
-                    year: response.data._embedded.adressen[0].oorspronkelijkBouwjaar,
-                    surface: response.data._embedded.adressen[0].oppervlakte
-                },
-            })
+            // Get the values of interest from response data and put it in 'buildingInfo'.
+            var buildingInfo = {
+                 province: province,
+                 postal: postalCode,
+                 street: response.data.openbareRuimteNaam,
+                 number: response.data.huisnummer,
+                 city: response.data.woonplaatsNaam,
+                 year: response.data.oorspronkelijkBouwjaar,
+                 surface: response.data.oppervlakte
+            }
             // On success, pass the building info to parent class then call for Properties screen.
-            this.props.setBuilding(this.state.building)
+            this.props.setBuilding(buildingInfo)
             this.props.showComponent('Properties')
         })
         .catch(error => console.log(error));
