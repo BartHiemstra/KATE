@@ -13,7 +13,9 @@ async function getAddress(postalCode, houseNumber) {
              }
          })
          // If successful, return addres info of the first object in the response data array.
+         //TODO: Only send necessary data in English instead of whole object.
          return response.data._embedded.adressen[0];
+         
      }
      // If not successful, return the error message.
      catch(error) {

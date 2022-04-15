@@ -14,8 +14,6 @@ export default class ScreenProperties extends Component {
   constructor(props) {
     super(props);
 
-    this.onChangeLength = this.onChangeLength.bind(this);
-    this.onChangeWidth = this.onChangeWidth.bind(this);
     this.onChangeFloorAmount = this.onChangeFloorAmount.bind(this);
     this.onChangeFloorHeight = this.onChangeFloorHeight.bind(this);
     this.onChangeFoundationType = this.onChangeFoundationType.bind(this);
@@ -39,16 +37,6 @@ export default class ScreenProperties extends Component {
       inputFoundationDepth: (typeof inputFoundationDepth === 'undefined') ? '' : this.props.inputValues.inputFoundationDepth,
       inputSupportType: (typeof inputSupportType === 'undefined') ? '' : this.props.inputValues.inputSupportType,
     }
-  }
-
-  onChangeLength(e) {
-    var length = e.target.value;
-    this.setState({ inputLength: length })
-  }
-
-  onChangeWidth(e) {
-    var width = e.target.value;
-    this.setState({ inputWidth: width })
   }
 
   onChangeFloorAmount(e) {
@@ -97,8 +85,6 @@ export default class ScreenProperties extends Component {
 
   onCalculate() {
     var inputValues = {
-      inputLength: this.state.inputLength,
-      inputWidth: this.state.inputWidth,
       inputFloorAmount: this.state.inputFloorAmount,
       inputFloorHeight: this.state.inputFloorHeight,
       inputFoundationType: this.state.foundationType,
@@ -109,8 +95,6 @@ export default class ScreenProperties extends Component {
     axios.get(API_BASE_URL + 'calculation/calculate', { 
       params: {
         surface: this.props.buildingInfo.surface,
-        length: this.state.inputLength,
-        width: this.state.inputWidth,
         floorAmount: this.state.inputFloorAmount,
         floorHeight: this.state.inputFloorHeight,
         foundationType: 'Fundering.type.' + this.state.inputFoundationType,
@@ -143,7 +127,7 @@ export default class ScreenProperties extends Component {
           </div>
           <div className='row padding-top-3'>
             <div className='col'>
-              <h4>Algemeen
+              <h4>Meetgegevens
                 <a href='#' onClick={this.onShowInfoModal}><img className='info-img' src={image} height={25} width={25}></img></a>
               </h4>                
               <label>Bouwjaar</label>
@@ -152,20 +136,20 @@ export default class ScreenProperties extends Component {
           </div>
           <div className='row padding-top-1'>
             <div className='col'>
-              <label>Totale gebruiksoppervlakte (GBO)</label>
-              <input readOnly type="text" value={this.props.buildingInfo.surface + ' m2'} name="input-surface" className="form-control"/>
+              <label>Omtrek</label>
+              <input readOnly type="text" value={Math.round(this.props.buildingInfo.length) + ' m'} name="input-bvo" className="form-control"/>
             </div>
           </div>
           <div className='row padding-top-1'>
             <div className='col'>
-              <label>Lengte</label>
-              <div className='suffix-longer'>m</div>
-              <input autoFocus type='number' min='0' max='1000' step='1' value={this.state.inputLength} onChange={this.onChangeLength} name="input-length" className="form-control"/>
+              <label>Oppervlakte</label>
+              <input readOnly type="text" value={Math.round(this.props.buildingInfo.area) + ' m2'} name="input-bvo" className="form-control"/>
             </div>
+          </div>
+          <div className='row padding-top-1'>
             <div className='col'>
-              <label>Breedte</label>
-              <div className='suffix-longer'>m</div>
-              <input type='number' min='0' max='1000' step='1' value={this.state.inputWidth} onChange={this.onChangeWidth} name="input-width" className="form-control"/>
+              <label>Totale gebruiksoppervlakte (GBO)</label>
+              <input readOnly type="text" value={this.props.buildingInfo.surface + ' m2'} name="input-surface" className="form-control"/>
             </div>
           </div>
           <div className='row padding-top-1'>

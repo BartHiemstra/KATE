@@ -14,10 +14,12 @@ export default class ScreenAddress extends Component {
     }
 
     // Fetch building info from backend based on input address, then store it in the 'building' object.
+    //TODO: Put in get request methods in different file?
     getBuildingInfo(province, postalCode, houseNumber) {
-        axios.get(API_BASE_URL + 'address/' + postalCode + '/' + houseNumber)
+        axios.get(API_BASE_URL + 'buildings/getBuildingInfo/' + postalCode + '/' + houseNumber)
         .then(response => {
-            // Get the values of interest from response data and put it in 'buildingInfo'.
+            console.log(response.data);
+            // On success, get the values of interest from response data and put it in 'buildingInfo'.
             var buildingInfo = {
                  province: province,
                  postal: postalCode,
@@ -25,9 +27,11 @@ export default class ScreenAddress extends Component {
                  number: response.data.huisnummer,
                  city: response.data.woonplaatsNaam,
                  year: response.data.oorspronkelijkBouwjaar,
-                 surface: response.data.oppervlakte
+                 surface: response.data.oppervlakte,
+                 area: response.data.area,
+                 length: response.data.length
             }
-            // On success, pass the building info to parent class then call for Properties screen.
+            // Pass the building info to parent class then call for Properties screen.
             this.props.setBuilding(buildingInfo)
             this.props.showComponent('Properties')
         })

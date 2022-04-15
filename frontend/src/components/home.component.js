@@ -29,9 +29,9 @@ export default class Home extends Component {
   }
 
   // Method to set the buildinginfo of selected building address.
-  setBuilding(building) {
+  setBuilding(buildingInfo) {
     this.setState({
-      building: building
+      building: buildingInfo
     })
   }
 
