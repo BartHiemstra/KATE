@@ -16,7 +16,7 @@ async function getGeometry(buildingId, buildingCoordinates) {
     var length = calcPolygonLength(polygon);
 
     // Create 3DBAG request URL with specified buildingCoorindates.
-    const BAG3D_URL = "https://data.3dbag.nl/api/BAG3D_v2/wfs?service=wfs&version=1.3.0&crs=EPSG%3A28992&request=GetFeature&typeName=BAG3Gv_2%3Alod22&bbox=" + buildingCoordinates[0] + "%2C" + buildingCoordinates[1] + "%2C" + buildingCoordinates[0] + "%2C" + buildingCoordinates[1] + "&outputFormat=application%2Fjson"
+    const BAG3D_URL = "https://data.3dbag.nl/api/BAG3D_v2/wfs?service=wfs&version=1.3.0&crs=EPSG%3A28992&request=GetFeature&typeName=BAG3Gv_2%3Alod12&bbox=" + buildingCoordinates[0] + "%2C" + buildingCoordinates[1] + "%2C" + buildingCoordinates[0] + "%2C" + buildingCoordinates[1] + "&outputFormat=application%2Fjson"
     var response = await getRequest(BAG3D_URL);
 
     // Calculate the building height by subracting the ground height (h_maaiveld) from the average of the middle 70% of measured building height points (h_dak_70p).
