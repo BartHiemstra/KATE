@@ -15,7 +15,6 @@ export default class ScreenProperties extends Component {
     super(props);
 
     this.onChangeFloorAmount = this.onChangeFloorAmount.bind(this);
-    this.onChangeFloorHeight = this.onChangeFloorHeight.bind(this);
     this.onChangeFoundationType = this.onChangeFoundationType.bind(this);
     this.onChangeFoundationDepth = this.onChangeFoundationDepth.bind(this);
     this.onChangeSupport = this.onChangeSupport.bind(this);
@@ -32,7 +31,6 @@ export default class ScreenProperties extends Component {
       inputLength: (typeof inputLength === 'undefined') ? '' : this.props.inputValues.inputLength,
       inputWidth: (typeof inputWidth === 'undefined') ? '' : this.props.inputValues.inputWidth,
       inputFloorAmount: (typeof inputFloorAmount === 'undefined') ? '' : this.props.inputValues.inputFloorAmount,
-      inputFloorHeight: (typeof inputFloorHeight === 'undefined') ? '' : this.props.inputValues.inputFloorHeight,
       inputFoundationType: (typeof inputFoundationType === 'undefined') ? '' : this.props.inputValues.inputFoundationType,
       inputFoundationDepth: (typeof inputFoundationDepth === 'undefined') ? '' : this.props.inputValues.inputFoundationDepth,
       inputSupportType: (typeof inputSupportType === 'undefined') ? '' : this.props.inputValues.inputSupportType,
@@ -45,14 +43,6 @@ export default class ScreenProperties extends Component {
       floorAmount = '';
     }
     this.setState({ inputFloorAmount: floorAmount })
-  }
-
-  onChangeFloorHeight(e) {
-    var floorHeight = e.target.value;
-    if(floorHeight < 0 || floorHeight > 9.9 || floorHeight.length > 3) {
-      floorHeight = '';
-    }
-    this.setState({ inputFloorHeight: floorHeight })
   }
 
   onChangeFoundationType(e) {
@@ -86,7 +76,6 @@ export default class ScreenProperties extends Component {
   onCalculate() {
     var inputValues = {
       inputFloorAmount: this.state.inputFloorAmount,
-      inputFloorHeight: this.state.inputFloorHeight,
       inputFoundationType: this.state.foundationType,
       inputFoundationDepth: this.state.foundationDepth,
       inputSupportType: this.state.supportType
@@ -96,7 +85,6 @@ export default class ScreenProperties extends Component {
       params: {
         surface: this.props.buildingInfo.surface,
         floorAmount: this.state.inputFloorAmount,
-        floorHeight: this.state.inputFloorHeight,
         foundationType: 'Fundering.type.' + this.state.inputFoundationType,
         foundationDepth: this.state.inputFoundationDepth,
         supportType: 'Hoofddraagconstructie.type.' + this.state.inputSupportType,
@@ -123,15 +111,19 @@ export default class ScreenProperties extends Component {
         <div className='container vh-100'>
           <div className='row padding-top-2 text-center'>
             <h2>{this.props.buildingInfo.street} {this.props.buildingInfo.number}</h2>
-            <h5>{this.props.buildingInfo.postal}, {this.props.buildingInfo.city}, {this.props.buildingInfo.province}</h5>
+            <h5>{this.props.buildingInfo.postal}, {this.props.buildingInfo.city}</h5>
           </div>
           <div className='row padding-top-3'>
             <div className='col'>
               <h4>Meetgegevens
                 <a href='#' onClick={this.onShowInfoModal}><img className='info-img' src={image} height={25} width={25}></img></a>
-              </h4>                
-              <label>Bouwjaar</label>
-              <input readOnly type="text" value={this.props.buildingInfo.year} name="input-year" className="form-control"/>
+              </h4>
+            </div>
+          </div>
+          <div className='row'>
+            <div className='col'>
+              <label>Hoogte</label>
+              <input readOnly type="text" value={parseFloat(this.props.buildingInfo.height).toFixed(1) + ' m'} name="input-bvo" className="form-control"/>
             </div>
           </div>
           <div className='row padding-top-1'>
@@ -156,11 +148,6 @@ export default class ScreenProperties extends Component {
             <div className='col'>
               <label>Aantal bouwlagen</label>
               <input type='number' min='0' max='99' step='1' value={this.state.inputFloorAmount} onChange={this.onChangeFloorAmount} name="input-floorAmount" className="form-control"/>
-            </div>
-            <div className='col'>
-              <label>Bouwlaaghoogte</label>
-              <div className='suffix'>m</div>
-              <input type='number' min='3.0' max='9.9' step='0.1' value={this.state.inputFloorHeight} onChange={this.onChangeFloorHeight} name="input-floorHeight" className="form-control"/>
             </div>
           </div>
           <div className='row padding-top-3'>

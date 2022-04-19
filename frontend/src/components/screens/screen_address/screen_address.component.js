@@ -29,7 +29,8 @@ export default class ScreenAddress extends Component {
                  year: response.data.oorspronkelijkBouwjaar,
                  surface: response.data.oppervlakte,
                  area: response.data.area,
-                 length: response.data.length
+                 length: response.data.length,
+                 height: response.data.height
             }
             // Pass the building info to parent class then call for Properties screen.
             this.props.setBuilding(buildingInfo)
