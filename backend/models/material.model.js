@@ -31,6 +31,16 @@ const materialSchema = new Schema({
       type: Number, 
       required: true,
       trim: true,
+  },
+  weight: {
+    type: Number,
+    required: true,
+    trim: true
+  },
+  value: {
+    type: Number,
+    required: true,
+    trim: true
   }
 });
 

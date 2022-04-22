@@ -4,11 +4,12 @@ const { getMaterials, getMaterialByName } = require('../repositories/material_da
 const { getFormula } = require('../services/formulas_service.js');
 
 async function calculateResidualValue(input) {
-    var surface = String((input.surface / input.floorAmount));
-    var length = String(input.length);
-    var width = String(input.width);
-    var floorAmount = String(input.floorAmount);
-    var floorHeight = String(input.floorHeight);
+    var area = parseFloat(input.area);
+    var length = parseFloat(input.length);
+    var height = parseFloat(input.height);
+    var volume = parseFloat(area * height);
+
+    var floorAmount = parseFloat(input.floorAmount);
     var foundationType = String(input.foundationType);
     var foundationDepth = String(input.foundationDepth);
     var supportType = String(input.supportType);
@@ -17,35 +18,32 @@ async function calculateResidualValue(input) {
     const materialSupportType = await getMaterialByName(supportType.split('.')[0], supportType.split('.')[1], supportType.split('.')[2]);
 
     const formulaSupportType = await getFormula(supportType);
-    
+
     //TODO: Make nameless, so that they can be read out in for() loop in frontend for better modularity.
     var residualValue = {
         foundationPikes: {
             name: 'Funderingspalen',
             material: materialFoundationType.materialName,
-            amount: (1/9) * parseFloat(surface),
             unitType: materialFoundationType.unitType,
-            total: (1/9) * parseFloat(surface) * 0.40 * 0.40 * foundationDepth,
-            value:  (1/9) * parseFloat(surface) * 0.40 * 0.40 * foundationDepth * materialFoundationType.pricePerUnit
+            total: (1/9) * parseFloat(area) * 0.40 * 0.40 * foundationDepth * materialFoundationType.weight / 1000,
+            value:  (1/9) * parseFloat(area) * 0.40 * 0.40 * foundationDepth * materialFoundationType.weight / 1000 * materialFoundationType.value
         },
         foundationBeams: {
             name: 'Funderingsbalken',
             material: materialFoundationType.materialName,
-            amount: (1/6) * parseFloat(length) + 4,
             unitType: materialFoundationType.unitType,
-            total: ((1/6) * parseFloat(length) * 0.40 * 0.60 * parseFloat(width)) + (length * 2) + (width * 2),
-            value: (1/6) * parseFloat(length) * 0.40 * 0.60 * parseFloat(width) * materialFoundationType.pricePerUnit
+            total: (1/6) * (length / 2) * 0.40 * 0.60 * materialFoundationType.weight / 1000,
+            value: (1/6) * (length / 2) * 0.40 * 0.60 * materialFoundationType.weight / 1000 * materialFoundationType.value
         },
         supportType: {
-            name: 'Constructie',
+            name: 'Hoofddraagconstructie',
             material: materialSupportType.materialName,
-            amount: 1,
             unitType: materialSupportType.unitType,
-            total: formulaSupportType.factor * parseFloat(surface),
-            value: formulaSupportType.factor * parseFloat(surface) * materialSupportType.pricePerUnit
+            total: ((0.3 * (floorAmount + 1) * area) + (0.2 * length * height)) * materialSupportType.weight / 1000,
+            value: ((0.3 * (floorAmount + 1) * area) + (0.2 * length * height)) * materialSupportType.weight / 1000 * materialSupportType.value
         }
     }
-    residualValue['total'] = { value: (residualValue.foundationPikes.total + residualValue.foundationBeams.total + residualValue.supportType.total) }
+    residualValue['total'] = { value: (residualValue.foundationPikes.value + residualValue.foundationBeams.value + residualValue.supportType.value) }
 
     return residualValue;
 }

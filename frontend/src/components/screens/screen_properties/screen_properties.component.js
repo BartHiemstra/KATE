@@ -28,8 +28,6 @@ export default class ScreenProperties extends Component {
     this.state = {
       showModal: false,
 
-      inputLength: (typeof inputLength === 'undefined') ? '' : this.props.inputValues.inputLength,
-      inputWidth: (typeof inputWidth === 'undefined') ? '' : this.props.inputValues.inputWidth,
       inputFloorAmount: (typeof inputFloorAmount === 'undefined') ? '' : this.props.inputValues.inputFloorAmount,
       inputFoundationType: (typeof inputFoundationType === 'undefined') ? '' : this.props.inputValues.inputFoundationType,
       inputFoundationDepth: (typeof inputFoundationDepth === 'undefined') ? '' : this.props.inputValues.inputFoundationDepth,
@@ -83,7 +81,9 @@ export default class ScreenProperties extends Component {
 
     axios.get(API_BASE_URL + 'calculation/calculate', { 
       params: {
-        surface: this.props.buildingInfo.surface,
+        height: this.props.buildingInfo.height,
+        length: this.props.buildingInfo.length,
+        area: this.props.buildingInfo.area,
         floorAmount: this.state.inputFloorAmount,
         foundationType: 'Fundering.type.' + this.state.inputFoundationType,
         foundationDepth: this.state.inputFoundationDepth,
@@ -115,7 +115,7 @@ export default class ScreenProperties extends Component {
           </div>
           <div className='row padding-top-3'>
             <div className='col'>
-              <h4>Meetgegevens
+              <h4>Geometrie
                 <a href='#' onClick={this.onShowInfoModal}><img className='info-img' src={image} height={25} width={25}></img></a>
               </h4>
             </div>
@@ -136,12 +136,6 @@ export default class ScreenProperties extends Component {
             <div className='col'>
               <label>Oppervlakte</label>
               <input readOnly type="text" value={Math.round(this.props.buildingInfo.area) + ' m2'} name="input-bvo" className="form-control"/>
-            </div>
-          </div>
-          <div className='row padding-top-1'>
-            <div className='col'>
-              <label>Totale gebruiksoppervlakte (GBO)</label>
-              <input readOnly type="text" value={this.props.buildingInfo.surface + ' m2'} name="input-surface" className="form-control"/>
             </div>
           </div>
           <div className='row padding-top-1'>
@@ -181,7 +175,7 @@ export default class ScreenProperties extends Component {
                 <option value=''></option>
                 <option value='Staal'>Staal</option>
                 <option value='Beton'>Beton</option>
-                <option value='Hout'>Hout</option>
+                <option value='Metselwerk'>Metselwerk</option>
               </select>
             </div>
           </div>
@@ -189,7 +183,7 @@ export default class ScreenProperties extends Component {
             <div className='col'>
               <h4>Vloeren</h4>
               <label>Type constructievloer</label>
-              <select onChange={this.onChangeSupport} className="form-control custom-select" name="input-supportType">
+              <select onChange={this.onChangeSupport} className="form-control custom-select" name="input-constructionFloor">
                 <option value=''></option>
                 <option value='Beton (Gestort)'>Beton (Gestort)</option>
                 <option value='Beton (Prefab)'>Beton (Prefab)</option>
@@ -203,7 +197,7 @@ export default class ScreenProperties extends Component {
           <div className='row padding-top-1'>
             <div className='col'>
               <label>Type dekvloer</label>
-              <select onChange={this.onChangeSupport} className="form-control custom-select" name="input-supportType">
+              <select onChange={this.onChangeSupport} className="form-control custom-select" name="input-equalityFloor">
                 <option value=''></option>
                 <option value='Beton'>Beton (Gestort)</option>
                 <option value='Zandcement'>Zandcement</option>
@@ -217,7 +211,7 @@ export default class ScreenProperties extends Component {
           <div className='row padding-top-1'>
             <div className='col'>
               <label>Type afwerking</label>
-              <select onChange={this.onChangeSupport} className="form-control custom-select" name="input-supportType">
+              <select onChange={this.onChangeSupport} className="form-control custom-select" name="input-finishFloor">
                 <option value=''></option>
                 <option value='Gietvloer'>Gietvloer</option>
                 <option value='Tapijt'>Tapijt</option>

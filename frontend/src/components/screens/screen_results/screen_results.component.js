@@ -13,6 +13,7 @@ export default class ScreenProperties extends Component {
   constructor(props) {
     super(props);
     
+    this.format = this.format.bind(this);
     this.onReturn = this.onReturn.bind(this);
     this.pushAPI = this.pushAPI.bind(this);
   }
@@ -35,6 +36,20 @@ export default class ScreenProperties extends Component {
       .then(result => console.log(result.data));
   }
 
+  // Format the input value to a more readable version.
+  format(value) {
+    //Round to 2 decimals.
+    var formattedValue = parseFloat(value).toFixed(2);
+    
+    //Swap dot with comma for decimals.
+    formattedValue = formattedValue.replace('.', ',')
+    
+    //Add '.' for every 3 numbers before the decimal.
+    formattedValue = formattedValue.replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.');
+
+    return formattedValue;
+  }
+
   render() {
     //TODO: Make table a separate component 'InfoTable'.
     return (
@@ -46,7 +61,7 @@ export default class ScreenProperties extends Component {
           </div>
           <div className='row padding-top-3'>
             <div className='card'>
-                <label className='padding-top-1'>Restwaarde: <b>€ {parseFloat(this.props.residualValue.total.value).toFixed(2).replace('.', ',')}</b></label>
+                <label className='padding-top-1'>Restwaarde: <b>€ {this.format(this.props.residualValue.total.value)}</b></label>
             </div>
           </div>
           <div className='row padding-top-3'>
@@ -60,7 +75,6 @@ export default class ScreenProperties extends Component {
                       <tr>
                         <th>Onderdeel</th>
                         <th>Materiaal</th>
-                        <th>Aantal</th>
                         <th>Totaal</th>
                         <th>Restwaarde</th>
                       </tr>
@@ -69,16 +83,14 @@ export default class ScreenProperties extends Component {
                       <tr>
                         <td>{this.props.residualValue.foundationPikes.name}</td>
                         <td>{this.props.residualValue.foundationPikes.material}</td>
-                        <td>{Math.round(this.props.residualValue.foundationPikes.amount)}</td>
                         <td>{Math.round(this.props.residualValue.foundationPikes.total)} {this.props.residualValue.foundationPikes.unitType}</td>
-                        <td>€ {parseFloat(this.props.residualValue.foundationPikes.value).toFixed(2).replace('.', ',')}</td>
+                        <td>€ {this.format(this.props.residualValue.foundationPikes.value)}</td>
                       </tr>
                       <tr>
                         <td>{this.props.residualValue.foundationBeams.name}</td>
                         <td>{this.props.residualValue.foundationBeams.material}</td>
-                        <td>{Math.round(this.props.residualValue.foundationBeams.amount)}</td>
                         <td>{Math.round(this.props.residualValue.foundationBeams.total)} {this.props.residualValue.foundationBeams.unitType}</td>
-                        <td>€ {parseFloat(this.props.residualValue.foundationBeams.value).toFixed(2).replace('.', ',')}</td>
+                        <td>€ {this.format(this.props.residualValue.foundationBeams.value)}</td>
                       </tr>
                     </tbody>
                   </Table>
@@ -101,7 +113,7 @@ export default class ScreenProperties extends Component {
                         <td>{this.props.residualValue.supportType.name}</td>
                         <td>{this.props.residualValue.supportType.material}</td>
                         <td>{Math.round(this.props.residualValue.supportType.total)} {this.props.residualValue.supportType.unitType}</td>
-                        <td>€ {parseFloat(this.props.residualValue.supportType.value).toFixed(2).replace('.', ',')}</td>
+                        <td>€ {this.format(this.props.residualValue.supportType.value)}</td>
                       </tr>
                     </tbody>
                   </Table>
