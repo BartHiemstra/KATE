@@ -57,7 +57,7 @@ export default class ScreenProperties extends Component {
         <div className='container vh-100'>
           <div className='row padding-top-2 text-center'>
             <h2>{this.props.buildingInfo.street} {this.props.buildingInfo.number}</h2>
-            <h5>{this.props.buildingInfo.postal}, {this.props.buildingInfo.city}, {this.props.buildingInfo.province}</h5>
+            <h5>{this.props.buildingInfo.postal}, {this.props.buildingInfo.city}</h5>
           </div>
           <div className='row padding-top-3'>
             <div className='card'>
