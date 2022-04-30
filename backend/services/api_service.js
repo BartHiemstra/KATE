@@ -11,10 +11,10 @@ async function getRequest(url) {
          // If successful, return response.         
          return response;
      }
-     // If not successful, return the error message.
+     // If not successful, print error message and return null.
      catch(error) {
          console.log('Error: ' + error);
-         return error;
+         return null;
      }
 }
 

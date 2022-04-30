@@ -14,6 +14,8 @@ export default class ScreenProperties extends Component {
   constructor(props) {
     super(props);
 
+    this.onChangeHeight = this.onChangeHeight.bind(this);
+
     this.onChangeFloorAmount = this.onChangeFloorAmount.bind(this);
     this.onChangeFoundationType = this.onChangeFoundationType.bind(this);
     this.onChangeFoundationDepth = this.onChangeFoundationDepth.bind(this);
@@ -28,11 +30,21 @@ export default class ScreenProperties extends Component {
     this.state = {
       showModal: false,
 
+      inputHeight: '',
+
       inputFloorAmount: (typeof inputFloorAmount === 'undefined') ? '' : this.props.inputValues.inputFloorAmount,
       inputFoundationType: (typeof inputFoundationType === 'undefined') ? '' : this.props.inputValues.inputFoundationType,
       inputFoundationDepth: (typeof inputFoundationDepth === 'undefined') ? '' : this.props.inputValues.inputFoundationDepth,
       inputSupportType: (typeof inputSupportType === 'undefined') ? '' : this.props.inputValues.inputSupportType,
     }
+  }
+
+  onChangeHeight(e) {
+    var height = e.target.value;
+    if(height < 0 || height > 999 || height.length > 5) {
+      height = '';
+    }
+    this.setState({ inputHeight: height })
   }
 
   onChangeFloorAmount(e) {
@@ -81,7 +93,7 @@ export default class ScreenProperties extends Component {
 
     axios.get(API_BASE_URL + 'calculation/calculate', { 
       params: {
-        height: this.props.buildingInfo.height,
+        height: this.props.buildingInfo.height > 0 ? this.props.buildingInfo.height : this.state.inputHeight,
         length: this.props.buildingInfo.length,
         area: this.props.buildingInfo.area,
         floorAmount: this.state.inputFloorAmount,
@@ -90,8 +102,7 @@ export default class ScreenProperties extends Component {
         supportType: 'Hoofddraagconstructie.type.' + this.state.inputSupportType,
     }})
     .then(response => {        
-        // On ssuccess, pass the building value to parent class then call for Results screen.
-        console.log(response);
+        // On success, pass the building value to parent class then call for Results screen.
         this.props.saveInputValues(inputValues);
         this.props.setResidualValue(response.data)
         this.props.showComponent('Results')
@@ -120,22 +131,33 @@ export default class ScreenProperties extends Component {
               </h4>
             </div>
           </div>
-          <div className='row'>
-            <div className='col'>
-              <label>Hoogte</label>
-              <input readOnly type="text" value={parseFloat(this.props.buildingInfo.height).toFixed(1) + ' m'} name="input-bvo" className="form-control"/>
+          {this.props.buildingInfo.height > 0 && 
+            <div className='row'>
+              <div className='col'>
+                <label>Hoogte</label>
+                <input readOnly value={parseFloat(this.props.buildingInfo.height).toFixed(1) + ' m'} name="geometry-height" className="form-control"/>
+              </div>
             </div>
-          </div>
+          }
+          {this.props.buildingInfo.height == 0 &&
+            <div className='row'>
+              <div className='col'>
+                <label>Hoogte in meters</label>
+                <div className={this.state.inputHeight.length > 2 ? 'suffix-longer' : 'suffix'}>m</div>
+                <input type='number' min='0' max='200' step='0.1' value={this.state.inputHeight} onChange={this.onChangeHeight} name="input-floorAmount" className="form-control"/>
+              </div>
+            </div>
+          }
           <div className='row padding-top-1'>
             <div className='col'>
               <label>Omtrek</label>
-              <input readOnly type="text" value={Math.round(this.props.buildingInfo.length) + ' m'} name="input-bvo" className="form-control"/>
+              <input readOnly type="text" value={Math.round(this.props.buildingInfo.length) + ' m'} name="geometry-length" className="form-control"/>
             </div>
           </div>
           <div className='row padding-top-1'>
             <div className='col'>
               <label>Oppervlakte</label>
-              <input readOnly type="text" value={Math.round(this.props.buildingInfo.area) + ' m2'} name="input-bvo" className="form-control"/>
+              <input readOnly type="text" value={Math.round(this.props.buildingInfo.area) + ' m2'} name="geometry-area" className="form-control"/>
             </div>
           </div>
           <div className='row padding-top-1'>

@@ -19,10 +19,18 @@ async function getGeometry(buildingId, buildingCoordinates) {
     const BAG3D_URL = "https://data.3dbag.nl/api/BAG3D_v2/wfs?service=wfs&version=1.3.0&crs=EPSG%3A28992&request=GetFeature&typeName=BAG3Gv_2%3Alod12&bbox=" + buildingCoordinates[0] + "%2C" + buildingCoordinates[1] + "%2C" + buildingCoordinates[0] + "%2C" + buildingCoordinates[1] + "&outputFormat=application%2Fjson"
     var response = await getRequest(BAG3D_URL);
 
-    // Calculate the building height by subracting the ground height (h_maaiveld) from the average of the middle 70% of measured building height points (h_dak_70p).
-    var totalHeight = response.data.features[0].properties.h_dak_70p;
-    var groundHeight = response.data.features[0].properties.h_maaiveld;
-    var height = totalHeight - groundHeight;
+    var height = null;
+
+    try {
+      // Calculate the building height by subracting the ground height (h_maaiveld) from the average of the middle 70% of measured building height points (h_dak_70p).
+      let totalHeight = response.data.features[0].properties.h_dak_70p;
+      let groundHeight = response.data.features[0].properties.h_maaiveld;
+      height = totalHeight - groundHeight;
+    }
+    catch {
+      // Response does not contain required information, set height to 0.
+       height = 0;
+    }
 
     // Return the geometry variables.
     var buildingGeometry = {

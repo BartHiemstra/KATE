@@ -9,10 +9,12 @@ router.route('/getBuildingInfo/:postalCode/:houseNumber').get(async function(req
   const postal = req.params.postalCode;
   const number = req.params.houseNumber;
   
+  console.log(postal + "," +  number);
   // Get building address from AddressService based on postal code and housenumber.
   var address = await getAddress(postal, number);
 
   // Take the building ID and coordinates from address and then get building geometry from GeometryService.
+  console.log(address);
   var buildingId = address.pandIdentificaties[0];
   var buildingCoordinates = address.adresseerbaarObjectGeometrie.punt.coordinates;
   var geometry = await getGeometry(buildingId, buildingCoordinates);

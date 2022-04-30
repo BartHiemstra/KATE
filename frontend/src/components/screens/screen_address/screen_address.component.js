@@ -8,6 +8,11 @@ import './screen_address.css';
 const API_BASE_URL = process.env.REACT_APP_BASE_URL;
 const GOOGLE_API_KEY = process.env.REACT_APP_API_GOOGLE_PLACES;
 
+// Create transformation object which will convert Lon/Lat(EPSG 4326) coordinate system to RD(EPSG 28992) coordindate system.
+//const transformation = require('transform-coordinates')
+const transformation = require('../../../common.js')
+const TRANSFORM = transformation('EPSG:4326', 'EPSG:28992')
+
 export default class ScreenAddress extends Component {
     constructor(props) {
         super(props);
@@ -57,7 +62,22 @@ export default class ScreenAddress extends Component {
                                 apiKey={ GOOGLE_API_KEY }
                                 placeholder="Straatnaam en huisnummer"
                                 onPlaceSelected={(place) => {
-                                    console.log(place);
+                                    /*
+                                    // Get the Latitude and Longitude coordinates from Google Places
+                                    let lat = place.geometry.location.lat();
+                                    let lng = place.geometry.location.lng();
+                                    console.log(lat + "," + lng);
+
+                                    // Convert the Latitude and Longitude coorindates to RijksDriehoeks X and Y coordinates.
+                                    var coordinatesRD = TRANSFORM.forward({x: lng, y: lat});
+
+                                    console.log(coordinatesRD.x + " | " + coordinatesRD.y);
+
+                                    this.getBuildingInfo(coordinatesRD.x, coordinatesRD.y);
+                                    
+                                    return;
+                                    */
+
                                     // When a place is selected, search for postal code and house number in the address_components array.
                                     //TODO: Let backend handle the logic
                                     let postalCode = null
@@ -72,10 +92,16 @@ export default class ScreenAddress extends Component {
                                     })
                                     // If both address components are found (!null), call getBuildingInfo().
                                     if(postalCode && houseNumber) {
+                                        console.log(postalCode + "." + houseNumber);
                                         this.getBuildingInfo(postalCode, houseNumber)
                                     }
                                     // If any address component is null, that means Google Places doesn't recognize it. Try to find the building based on custom input.
                                     else {
+                                        console.log("Gaat fout");
+                                        // Create empty variables for postal code and house number.
+                                        let postalCode = null;
+                                        let houseNumber = null;
+
                                         // Split the input-address on the ',' character.
                                         let fullAddress = place.name.split(',');
 
@@ -83,16 +109,19 @@ export default class ScreenAddress extends Component {
                                         let regexPostal = / *[0-9]{4} *[A-Z]{2}/;
                                         let regexNumber = / *[0-9]{2} */;
 
-                                        // Search postal code and housenumber based on regex, convert to string, and remove any whitespace.
-                                        let postalCode = fullAddress[1].match(regexPostal).toString().replace(/\s/g, '');
-                                        let houseNumber = fullAddress[1].match(regexNumber).toString().replace(/\s/g, '');
+                                        // Search postal code and house number based on regex, convert to string, and remove any whitespace.
+                                        postalCode = fullAddress[1].match(regexPostal).toString().replace(/\s/g, '');
+                                        houseNumber = fullAddress[0].match(regexNumber).toString().replace(/\s/g, '');
 
                                         // If input postal code and housenumber are found using RegularExpressions, call buildingInfo with them.
                                         if(postalCode && houseNumber) {
+                                            console.log("yes");
                                             this.getBuildingInfo(postalCode, houseNumber)
                                         }
                                         // TODO: Error validation.
                                         else {
+                                            console.log("No");
+                                            console.log("FOut");
 
                                         }
                                         console.log("Postal code =" + postalCode);
