@@ -55,6 +55,7 @@ export default class ScreenAddress extends Component {
                     <div className='row'>
                         <div className='col'>
                             <Autocomplete
+                                name='input-address'
                                 autoFocus={true}
                                 spellCheck={false}
                                 language={'NL'}
@@ -116,20 +117,14 @@ export default class ScreenAddress extends Component {
 
                                         // If input postal code and housenumber are found using RegularExpressions, call buildingInfo with them.
                                         if(postalCode && houseNumber) {
-                                            console.log("yes");
                                             this.getBuildingInfo(postalCode, houseNumber)
                                         }
                                         // TODO: Error validation.
                                         else {
-                                            console.log("No");
-                                            console.log("FOut");
+                                            console.log("Huisnummer / postcode niet gevonden.");
 
                                         }
-                                        console.log("Postal code =" + postalCode);
-                                        console.log("HouseNumber=" + houseNumber);
                                     }
-                                    // Otherwise, return error message.
-                                    //TODO: Return error message
                                 }}
                             />
                             {/*<Button onClick={() => this.props.showComponent('Properties')}>Verderr</Button>*/}

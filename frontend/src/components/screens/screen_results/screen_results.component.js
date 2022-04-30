@@ -61,7 +61,7 @@ export default class ScreenProperties extends Component {
           </div>
           <div className='row padding-top-3'>
             <div className='card'>
-                <label className='padding-top-1'>Restwaarde: <b>€ {this.format(this.props.residualValue.total.value)}</b></label>
+                <label id='label-residualValue' className='padding-top-1'>Restwaarde: <b>€ {this.format(this.props.residualValue.total.value)}</b></label>
             </div>
           </div>
           <div className='row padding-top-3'>

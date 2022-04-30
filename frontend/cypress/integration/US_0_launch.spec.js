@@ -1,4 +1,4 @@
-describe('App launch', () => {
+describe('App launch test', () => {
     it('App loads successfully', () => {
         //Arrange
         cy.visit('http://localhost:3000')

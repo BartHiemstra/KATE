@@ -144,7 +144,7 @@ export default class ScreenProperties extends Component {
               <div className='col'>
                 <label>Hoogte in meters</label>
                 <div className={this.state.inputHeight.length > 2 ? 'suffix-longer' : 'suffix'}>m</div>
-                <input type='number' min='0' max='200' step='0.1' value={this.state.inputHeight} onChange={this.onChangeHeight} name="input-floorAmount" className="form-control"/>
+                <input type='number' min='0' max='200' step='0.1' value={this.state.inputHeight} onChange={this.onChangeHeight} name="input-height" className="form-control"/>
               </div>
             </div>
           }
@@ -170,7 +170,7 @@ export default class ScreenProperties extends Component {
             <div className='col'>
               <h4>Fundering</h4>
               <label>Type</label>
-              <select onChange={this.onChangeFoundationType} className="form-control custom-select" name="input-foundationType">
+              <select onChange={this.onChangeFoundationType} className="form-control custom-select" name="input-foundationType" id='input-foundationType'>
                 <option value=''></option>
                 <option value='Op staal'>Fundering op staal</option>
                 <option value='Betonpalen'>Betonpalen</option>
@@ -193,7 +193,7 @@ export default class ScreenProperties extends Component {
             <div className='col'>
               <h4>Hoofddraagconstructie</h4>
               <label>Type</label>
-              <select onChange={this.onChangeSupport} className="form-control custom-select" name="input-supportType">
+              <select onChange={this.onChangeSupport} className="form-control custom-select" name="input-supportType" id='input-supportType'>
                 <option value=''></option>
                 <option value='Staal'>Staal</option>
                 <option value='Beton'>Beton</option>
@@ -278,13 +278,13 @@ export default class ScreenProperties extends Component {
           <div className='row padding-top-1'>
             <div className='col'>
               <label>Percentage glas</label>
-              <input type='number' min='0' max='100' step='1' name="input-floorAmount" className="form-control"/>
+              <input type='number' min='0' max='100' step='1' name="input-percentageOpen" className="form-control"/>
             </div>
           </div>
           <div className='row padding-top-2'>
             <div className='col'>
-              <Button variant="outline-primary" onClick={this.onReturn}>Vorige</Button>
-              <Button variant="primary" onClick={this.onCalculate}>Bereken restwaarde</Button>
+              <Button id='btn-back' variant="outline-primary" onClick={this.onReturn}>Vorige</Button>
+              <Button id='btn-continue' variant="primary" onClick={this.onCalculate}>Bereken restwaarde</Button>
             </div>
           </div>
           <div className='padding-bottom-2'></div>
