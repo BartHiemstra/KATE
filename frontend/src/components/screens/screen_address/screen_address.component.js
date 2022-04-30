@@ -97,21 +97,22 @@ export default class ScreenAddress extends Component {
                                     }
                                     // If any address component is null, that means Google Places doesn't recognize it. Try to find the building based on custom input.
                                     else {
-                                        console.log("Gaat fout");
                                         // Create empty variables for postal code and house number.
                                         let postalCode = null;
                                         let houseNumber = null;
 
                                         // Split the input-address on the ',' character.
-                                        let fullAddress = place.name.split(',');
+                                        let fullAddress = place.name;
 
                                         // Create regex strings for finding the postal code and housenumber in a string.
                                         let regexPostal = / *[0-9]{4} *[A-Z]{2}/;
-                                        let regexNumber = / *[0-9]{2} */;
+                                        let regexNumber = / *[0-9]{1,5} */;
 
-                                        // Search postal code and house number based on regex, convert to string, and remove any whitespace.
-                                        postalCode = fullAddress[1].match(regexPostal).toString().replace(/\s/g, '');
-                                        houseNumber = fullAddress[0].match(regexNumber).toString().replace(/\s/g, '');
+                                        console.log(fullAddress);
+
+                                        // Search postal    code and house number based on regex, convert to string, and remove any whitespace.
+                                        postalCode = fullAddress.match(regexPostal).toString().replace(/\s/g, '');
+                                        houseNumber = fullAddress.match(regexNumber).toString().replace(/\s/g, '');
 
                                         // If input postal code and housenumber are found using RegularExpressions, call buildingInfo with them.
                                         if(postalCode && houseNumber) {
