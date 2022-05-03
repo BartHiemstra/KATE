@@ -11,6 +11,7 @@ jobs:
       - name: Cypress run
         uses: cypress-io/github-action@v2
         with:
+          headless: false
           browser: chrome
           working-directory: frontend
           build: npm run build
