@@ -14,9 +14,9 @@ const GOOGLE_API_KEY = process.env.REACT_APP_API_GOOGLE_PLACES;
 //const TRANSFORM = transformation('EPSG:4326', 'EPSG:28992')
 
 export default class ScreenAddress extends Component {
-    
+
     // Fetch building info from backend based on input address, then store it in the 'building' object.
-    //TODO: Put in get request methods in different file?
+    //TODO: Put in get request methods in different file.
     getBuildingInfo(postalCode, houseNumber) {
         axios.get(API_BASE_URL + 'buildings/getBuildingInfo/' + postalCode + '/' + houseNumber)
         .then(response => {
