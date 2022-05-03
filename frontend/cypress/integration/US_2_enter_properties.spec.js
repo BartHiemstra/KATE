@@ -7,11 +7,10 @@ describe('User Story 2 - Enter properties', () => {
     })
     it('Fill in address, then press enter.', () => {
         // Act
-        cy.wait(12000)
-        cy.get('input[name="input-address"]').type("Europalaan 400, 3526 KS Utrecht").wait(2000).type('{enter}')
+        cy.get('input[name="input-address"]').type("Europalaan 400, 3526 KS Utrecht").wait(500).type('{enter}')
 
         // Assert
-        cy.wait(12000)
+        cy.wait(2000)
         cy.get('h4').should('contain.text', 'Geometrie')
     })
     it('Fill out properties, then press continue button.', () => {
@@ -24,7 +23,7 @@ describe('User Story 2 - Enter properties', () => {
         cy.get('#btn-continue').click()
 
         // Assert
-        cy.wait(12000)
+        cy.wait(2000)
         cy.get('#label-residualValue').should('contain.text', 'Restwaarde')
     })
 })
