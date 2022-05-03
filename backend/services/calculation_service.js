@@ -14,10 +14,25 @@ async function calculateResidualValue(input) {
     var foundationDepth = String(input.foundationDepth);
     var supportType = String(input.supportType);
 
+    // todo var namen aanpassen
+    const [ componentName, labelName, materialName ] = foundationType.split('.');
     const materialFoundationType = await getMaterialByName(foundationType.split('.')[0], foundationType.split('.')[1], foundationType.split('.')[2])    
     const materialSupportType = await getMaterialByName(supportType.split('.')[0], supportType.split('.')[1], supportType.split('.')[2]);
 
     const formulaSupportType = await getFormula(supportType);
+
+    const calculateTotalAndValue = (name, foundationDepth, weight, value) => {
+        let total, value;
+
+        switch(name) {
+            case 'Funderingspalen':
+                total = (1/9) * parseFloat(area) * 0.40 * 0.40 * foundationDepth * materialFoundationType.weight / 1000;
+                value = (1/9) * parseFloat(area) * 0.40 * 0.40 * foundationDepth * materialFoundationType.weight / 1000 * materialFoundationType.value;
+                break;
+        }
+
+        return { total, value };
+    }
 
     //TODO: Make nameless, so that they can be read out in for() loop in frontend for better modularity.
     var residualValue = {

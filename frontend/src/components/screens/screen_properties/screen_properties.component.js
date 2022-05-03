@@ -144,7 +144,7 @@ export default class ScreenProperties extends Component {
               <div className='col'>
                 <label>Hoogte in meters</label>
                 <div className={this.state.inputHeight.length > 2 ? 'suffix-longer' : 'suffix'}>m</div>
-                <input type='number' min='0' max='200' step='0.1' value={this.state.inputHeight} onChange={this.onChangeHeight} name="input-height" className="form-control"/>
+                <input type='number' min='0' max='200' step='0.1' value={this.state.inputHeight} onChange={this.onChangeHeight} name="input-height" className="form-control" onKeyDown={ (evt) => evt.key === 'e' && evt.preventDefault() }/>
               </div>
             </div>
           }
