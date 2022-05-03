@@ -1,13 +1,10 @@
 //Import corresponding DAO functions from Repository layer.
 const { getMaterials, getMaterialByName } = require('../repositories/material_dao.js');
 
-const { getFormula } = require('../services/formulas_service.js');
-
 async function calculateResidualValue(input) {
     var area = parseFloat(input.area);
     var length = parseFloat(input.length);
     var height = parseFloat(input.height);
-    var volume = parseFloat(area * height);
 
     var floorAmount = parseFloat(input.floorAmount);
     var foundationType = String(input.foundationType);
@@ -15,24 +12,9 @@ async function calculateResidualValue(input) {
     var supportType = String(input.supportType);
 
     // todo var namen aanpassen
-    const [ componentName, labelName, materialName ] = foundationType.split('.');
+   // const [ componentName, labelName, materialName ] = foundationType.split('.');
     const materialFoundationType = await getMaterialByName(foundationType.split('.')[0], foundationType.split('.')[1], foundationType.split('.')[2])    
     const materialSupportType = await getMaterialByName(supportType.split('.')[0], supportType.split('.')[1], supportType.split('.')[2]);
-
-    const formulaSupportType = await getFormula(supportType);
-
-    const calculateTotalAndValue = (name, foundationDepth, weight, value) => {
-        let total, value;
-
-        switch(name) {
-            case 'Funderingspalen':
-                total = (1/9) * parseFloat(area) * 0.40 * 0.40 * foundationDepth * materialFoundationType.weight / 1000;
-                value = (1/9) * parseFloat(area) * 0.40 * 0.40 * foundationDepth * materialFoundationType.weight / 1000 * materialFoundationType.value;
-                break;
-        }
-
-        return { total, value };
-    }
 
     //TODO: Make nameless, so that they can be read out in for() loop in frontend for better modularity.
     var residualValue = {

@@ -24,7 +24,7 @@ export default class Home extends Component {
   // Method to show another component by changing the value of showItem and updating renderer.
   showComponent(component) {
     this.setState({
-      showItem: this.state.showItem = component
+      showItem: component
     })
   }
 

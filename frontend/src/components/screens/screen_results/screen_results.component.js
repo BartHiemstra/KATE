@@ -2,9 +2,6 @@ import React, { Component } from 'react';
 import { Accordion, Button, Table } from 'react-bootstrap';
 import axios from 'axios';
 
-import image from '../../../assets/images/icon_info.png';
-import InfoModal from '../../modal/info_modal.component';
-
 import './screen_results.css';
 
 const API_BASE_URL = process.env.REACT_APP_BASE_URL;

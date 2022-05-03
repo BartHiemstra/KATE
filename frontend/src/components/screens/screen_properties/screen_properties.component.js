@@ -127,7 +127,7 @@ export default class ScreenProperties extends Component {
           <div className='row padding-top-3'>
             <div className='col'>
               <h4>Geometrie
-                <a href='#' onClick={this.onShowInfoModal}><img className='info-img' src={image} height={25} width={25}></img></a>
+                <a onClick={this.onShowInfoModal}><img alt='Meer informatie over Geometrie' className='info-img' src={image} height={25} width={25}></img></a>
               </h4>
             </div>
           </div>
@@ -139,7 +139,7 @@ export default class ScreenProperties extends Component {
               </div>
             </div>
           }
-          {this.props.buildingInfo.height == 0 &&
+          {this.props.buildingInfo.height === 0 &&
             <div className='row'>
               <div className='col'>
                 <label>Hoogte in meters</label>

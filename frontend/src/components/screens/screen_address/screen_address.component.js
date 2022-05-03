@@ -10,14 +10,11 @@ const GOOGLE_API_KEY = process.env.REACT_APP_API_GOOGLE_PLACES;
 
 // Create transformation object which will convert Lon/Lat(EPSG 4326) coordinate system to RD(EPSG 28992) coordindate system.
 //const transformation = require('transform-coordinates')
-const transformation = require('../../../common.js')
-const TRANSFORM = transformation('EPSG:4326', 'EPSG:28992')
+//const transformation = require('../../../common.js')
+//const TRANSFORM = transformation('EPSG:4326', 'EPSG:28992')
 
 export default class ScreenAddress extends Component {
-    constructor(props) {
-        super(props);
-    }
-
+    
     // Fetch building info from backend based on input address, then store it in the 'building' object.
     //TODO: Put in get request methods in different file?
     getBuildingInfo(postalCode, houseNumber) {
