@@ -127,7 +127,7 @@ export default class ScreenProperties extends Component {
           <div className='row padding-top-3'>
             <div className='col'>
               <h4>Geometrie
-                <a onClick={this.onShowInfoModal}><img alt='Meer informatie over Geometrie' className='info-img' src={image} height={25} width={25}></img></a>
+                <btn onClick={this.onShowInfoModal}><img alt='Toon meer informatie' className='info-img' src={image} height={25} width={25}></img></btn>
               </h4>
             </div>
           </div>
