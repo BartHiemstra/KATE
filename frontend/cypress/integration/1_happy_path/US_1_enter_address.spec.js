@@ -8,7 +8,6 @@ describe('User Story 1 - Enter address', () => {
         cy.get('input[name="input-address"]').type("Europalaan 400, 3526 KS Utrecht").wait(500).type('{enter}')
 
         // Assert
-        cy.wait(2000)
         cy.get('h4').should('contain.text', 'Geometrie')
     })
 })

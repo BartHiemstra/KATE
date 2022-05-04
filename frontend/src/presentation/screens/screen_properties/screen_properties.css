@@ -63,6 +63,11 @@
     cursor: pointer;
 }
 
+button, button:hover {
+    background-color: #00000000;
+    border: none;
+}
+
 label {
     white-space: nowrap;
 }

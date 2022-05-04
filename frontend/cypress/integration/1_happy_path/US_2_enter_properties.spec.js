@@ -10,7 +10,6 @@ describe('User Story 2 - Enter properties', () => {
         cy.get('input[name="input-address"]').type("Europalaan 400, 3526 KS Utrecht").wait(500).type('{enter}')
 
         // Assert
-        cy.wait(2000)
         cy.get('h4').should('contain.text', 'Geometrie')
     })
     it('Fill out properties, then press continue button.', () => {
@@ -23,7 +22,6 @@ describe('User Story 2 - Enter properties', () => {
         cy.get('#btn-continue').click()
 
         // Assert
-        cy.wait(2000)
         cy.get('#label-residualValue').should('contain.text', 'Restwaarde')
     })
 })
