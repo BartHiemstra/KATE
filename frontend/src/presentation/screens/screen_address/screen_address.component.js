@@ -27,9 +27,9 @@ export default class ScreenAddress extends Component {
                                 autoFocus={true}
                                 spellCheck={false}
                                 language={'NL'}
+                                placeholder="Adres"
                                 options={{ types: ['address'], componentRestrictions: { country: 'nl' } }}
                                 apiKey={ GOOGLE_API_KEY }
-                                placeholder="Straatnaam en huisnummer"
                                 onPlaceSelected={(place) => {
                                     // Get the postal code and house number from business layer.
                                     let { postalCode, houseNumber } = GetPostalAndHouseNumber(place);
