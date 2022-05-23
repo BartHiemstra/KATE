@@ -27,3 +27,30 @@ export async function GetBuildingInfo(postalCode, houseNumber) {
     
     return buildingInfo;
 }
+
+export async function getResidualValue(inputValues) {
+    let residualValue = null;
+
+    await axios.get(API_BASE_URL + 'calculation/calculate/', { 
+        params: {
+            height: inputValues.height,
+            length: inputValues.length,
+            area: inputValues.area,
+            floorAmount: inputValues.floorAmount,
+            wallType: inputValues.wallType,
+            wallWidth: inputValues.wallWidth,
+            percentageOpen: inputValues.percentageOpen,
+            floorType: inputValues.floorType,
+            floorHeight: inputValues.floorHeight,
+            roofType: inputValues.roofType,
+            roofHeight: inputValues.roofHeight,
+            facadeType: inputValues.inputFacadeType,
+            facadeWidth: inputValues.inputFacadeWidth
+    }})
+    .then(response => {        
+          residualValue = response.data;
+    })
+    .catch(error => console.log(error));
+
+    return residualValue;
+}

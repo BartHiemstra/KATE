@@ -19,6 +19,7 @@ export default class ScreenProperties extends Component {
     this.props.showComponent('Properties')
   }
 
+  
   //Testing API
   pushAPI() {
     const material = {
@@ -32,6 +33,7 @@ export default class ScreenProperties extends Component {
     axios.get(API_BASE_URL + 'materials/add', material)
       .then(result => console.log(result.data));
   }
+  
 
   // Format the input value to a more readable version.
   format(value) {
@@ -48,24 +50,27 @@ export default class ScreenProperties extends Component {
   }
 
   render() {
-    //TODO: Make table a separate component 'InfoTable'.
+    console.log(this.props.residualValue);
+    const data = Array.from(this.props.residualValue);
+    console.log(data);
     return (
       <div>
         <div className='container vh-100'>
-          <div className='row padding-top-2 text-center'>
+          <div className='row padding-top-3 text-center'>
             <h2>{this.props.buildingInfo.street} {this.props.buildingInfo.number}</h2>
             <h5>{this.props.buildingInfo.postal}, {this.props.buildingInfo.city}</h5>
           </div>
           <div className='row padding-top-3'>
             <div className='card'>
-                <label id='label-residualValue' className='padding-top-1'>Restwaarde: <b>€ {this.format(this.props.residualValue.total.value)}</b></label>
+                <label id='label-residualValue' className='padding-top-1'>Restwaarde: <b>€ {this.format(1)}</b></label>
             </div>
           </div>
           <div className='row padding-top-3'>
             <h6>De gegeven materiële restwaarde voor dit pand is opgebouwd uit de volgende elementen:</h6>
-            <Accordion alwaysOpen>
-              <Accordion.Item eventKey="0">
-                <Accordion.Header>Fundering</Accordion.Header>
+            {data.map(item => (
+              <Accordion alwaysOpen>
+                <Accordion.Item eventKey="0">
+                <Accordion.Header>item.name</Accordion.Header>
                 <Accordion.Body>
                   <Table responsive style={{ whiteSpace: 'nowrap' }}>
                     <thead>
@@ -78,45 +83,17 @@ export default class ScreenProperties extends Component {
                     </thead>
                     <tbody>
                       <tr>
-                        <td>{this.props.residualValue.foundationPikes.name}</td>
-                        <td>{this.props.residualValue.foundationPikes.material}</td>
-                        <td>{Math.round(this.props.residualValue.foundationPikes.total)} {this.props.residualValue.foundationPikes.unitType}</td>
-                        <td>€ {this.format(this.props.residualValue.foundationPikes.value)}</td>
-                      </tr>
-                      <tr>
-                        <td>{this.props.residualValue.foundationBeams.name}</td>
-                        <td>{this.props.residualValue.foundationBeams.material}</td>
-                        <td>{Math.round(this.props.residualValue.foundationBeams.total)} {this.props.residualValue.foundationBeams.unitType}</td>
-                        <td>€ {this.format(this.props.residualValue.foundationBeams.value)}</td>
+                        <td>{ item.name}</td>
+                        <td>{ item.material }</td>
+                        <td>{ item.total }</td>
+                        <td>€ {this.format(item.value)}</td>
                       </tr>
                     </tbody>
                   </Table>
                 </Accordion.Body>
-              </Accordion.Item>
-              <Accordion.Item eventKey="1">
-                <Accordion.Header>Hoofddraagconstructie</Accordion.Header>
-                <Accordion.Body>
-                <Table responsive style={{ whiteSpace: 'nowrap' }}>
-                    <thead>
-                      <tr>
-                        <th>Onderdeel</th>
-                        <th>Materiaal</th>
-                        <th>Totaal</th>
-                        <th>Restwaarde</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td>{this.props.residualValue.supportType.name}</td>
-                        <td>{this.props.residualValue.supportType.material}</td>
-                        <td>{Math.round(this.props.residualValue.supportType.total)} {this.props.residualValue.supportType.unitType}</td>
-                        <td>€ {this.format(this.props.residualValue.supportType.value)}</td>
-                      </tr>
-                    </tbody>
-                  </Table>
-                </Accordion.Body>
-              </Accordion.Item>
-            </Accordion>
+              </Accordion.Item>       
+              </Accordion>
+            ))}
           </div>
           <div className='row padding-top-2'>
             <div className='col'>

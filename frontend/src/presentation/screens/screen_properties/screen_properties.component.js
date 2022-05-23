@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Button } from 'react-bootstrap';
 import axios from 'axios';
-import Fade from 'react-reveal/Fade';
 
+import { GetBuildingInfo } from '../../../business/requests.js';
 import image from '../../../assets/images/icon_info.png';
 import InfoModal from '../../modal/info_modal.component';
 
@@ -15,12 +15,21 @@ export default class ScreenProperties extends Component {
     super(props);
 
     this.onChangeHeight = this.onChangeHeight.bind(this);
-
     this.onChangeFloorAmount = this.onChangeFloorAmount.bind(this);
-    this.onChangeFoundationType = this.onChangeFoundationType.bind(this);
-    this.onChangeFoundationDepth = this.onChangeFoundationDepth.bind(this);
-    this.onChangeSupport = this.onChangeSupport.bind(this);
-    
+
+    this.onChangeWallType = this.onChangeWallType.bind(this);
+    this.onChangeWallWidth = this.onChangeWallWidth.bind(this);
+    this.onChangePercentageOpen = this.onChangePercentageOpen.bind(this);
+
+    this.onChangeFloorType = this.onChangeFloorType.bind(this);
+    this.onChangeFloorHeight = this.onChangeFloorHeight.bind(this);
+
+    this.onChangeRoofType = this.onChangeRoofType.bind(this);
+    this.onChangeRoofHeight = this.onChangeRoofHeight.bind(this);
+
+    this.onChangeFacadeType = this.onChangeFacadeType.bind(this);
+    this.onChangeFacadeWidth = this.onChangeFacadeWidth.bind(this);
+
     this.onShowInfoModal = this.onShowInfoModal.bind(this);
     this.onCloseInfoModel = this.onCloseInfoModel.bind(this);
 
@@ -31,11 +40,20 @@ export default class ScreenProperties extends Component {
       showModal: false,
 
       inputHeight: '',
+      inputFloorAmount: '',
 
-      inputFloorAmount: (typeof inputFloorAmount === 'undefined') ? '' : this.props.inputValues.inputFloorAmount,
-      inputFoundationType: (typeof inputFoundationType === 'undefined') ? '' : this.props.inputValues.inputFoundationType,
-      inputFoundationDepth: (typeof inputFoundationDepth === 'undefined') ? '' : this.props.inputValues.inputFoundationDepth,
-      inputSupportType: (typeof inputSupportType === 'undefined') ? '' : this.props.inputValues.inputSupportType,
+      inputWallType: '',
+      inputWallWidth: '0.3',
+      inputPercentageOpen: '20',
+
+      inputFloorType: '',
+      inputFloorHeight: '0.3',
+
+      inputRoofType: '',
+      inputRoofHeight: '0.3',
+
+      inputFacadeType: '',
+      inputFacadeWidth: '0.1'
     }
   }
 
@@ -55,24 +73,68 @@ export default class ScreenProperties extends Component {
     this.setState({ inputFloorAmount: floorAmount })
   }
 
-  onChangeFoundationType(e) {
-    e.preventDefault()
-    var foundationType = e.target.value;
-    this.setState({ inputFoundationType: foundationType })
+  onChangeWallType(e) {
+    var wallType = e.target.value;
+    this.setState({inputWallType: wallType })
   }
 
-  onChangeFoundationDepth(e) {
+  onChangeWallWidth(e) {
     e.preventDefault()
-    var foundationDepth = e.target.value;
-    if(foundationDepth < 0 || foundationDepth > 20.0 || foundationDepth.length > 4) {
-      foundationDepth = '';
+    var wallWidth = e.target.value;
+    if(wallWidth < 0 || wallWidth > 5.0 || wallWidth.length > 4) {
+      wallWidth = '';
     }
-    this.setState({ inputFoundationDepth: foundationDepth })
+    this.setState({ inputWallWidth: wallWidth })
   }
 
-  onChangeSupport(e) {
-    var supportType = e.target.value;
-    this.setState({inputSupportType: supportType })
+  onChangePercentageOpen(e) {
+    var percentageOpen = e.target.value;
+    if(percentageOpen < 0 || percentageOpen > 99 || percentageOpen % 1 != 0) {
+      percentageOpen = '';
+    }
+    this.setState({ inputPercentageOpen: percentageOpen })
+  }
+
+  onChangeFloorType(e) {
+    var floorType = e.target.value;
+    this.setState({ inputFloorType: floorType })
+  }
+
+  onChangeFloorHeight(e) {
+    e.preventDefault()
+    var floorHeight = e.target.value;
+    if(floorHeight < 0 || floorHeight > 5.0 || floorHeight.length > 4) {
+      floorHeight = '';
+    }
+    this.setState({ inputFloorHeight: floorHeight })
+  }
+
+  onChangeFacadeType(e) {
+    var facadeType = e.target.value;
+    this.setState({ inputFacadeType: facadeType })
+  }
+
+  onChangeFacadeWidth(e) {
+    e.preventDefault()
+    var facadeWidth = e.target.value;
+    if(facadeWidth < 0 || facadeWidth > 5.0 || facadeWidth.length > 4) {
+      facadeWidth = '';
+    }
+    this.setState({ inputFacadeWidth: facadeWidth })
+  }
+
+  onChangeRoofType(e) {
+    var roofType = e.target.value;
+    this.setState({ inputRoofType: roofType })
+  }
+
+  onChangeRoofHeight(e) {
+    e.preventDefault()
+    var roofHeight = e.target.value;
+    if(roofHeight < 0 || roofHeight > 5.0 || roofHeight.length > 4) {
+      roofHeight = '';
+    }
+    this.setState({ inputRoofHeight: roofHeight })
   }
 
   onShowInfoModal() {
@@ -85,21 +147,36 @@ export default class ScreenProperties extends Component {
 
   onCalculate() {
     var inputValues = {
-      inputFloorAmount: this.state.inputFloorAmount,
-      inputFoundationType: this.state.foundationType,
-      inputFoundationDepth: this.state.foundationDepth,
-      inputSupportType: this.state.supportType
+      height: this.props.buildingInfo.height > 0 ? this.props.buildingInfo.height : this.state.inputHeight,
+      length: this.props.buildingInfo.length,
+      area: this.props.buildingInfo.area,
+      floorAmount: this.state.inputFloorAmount,
+      wallType: this.state.inputWallType,
+      wallWidth: this.state.inputWallWidth,
+      percentageOpen: this.state.inputPercentageOpen,
+      floorType: this.state.inputFloorType,
+      floorHeight: this.state.inputFloorHeight,
+      roofType: this.state.inputRoofType,
+      roofHeight: this.state.inputRoofHeight,
+      facadeType: this.state.inputFacadeType,
+      facadeWidth: this.state.inputFacadeWidth
     }
 
     axios.get(API_BASE_URL + 'calculation/calculate', { 
       params: {
-        height: this.props.buildingInfo.height > 0 ? this.props.buildingInfo.height : this.state.inputHeight,
-        length: this.props.buildingInfo.length,
-        area: this.props.buildingInfo.area,
-        floorAmount: this.state.inputFloorAmount,
-        foundationType: 'Fundering.type.' + this.state.inputFoundationType,
-        foundationDepth: this.state.inputFoundationDepth,
-        supportType: 'Hoofddraagconstructie.type.' + this.state.inputSupportType,
+        height: inputValues.height,
+        length: inputValues.length,
+        area: inputValues.area,
+        floorAmount: inputValues.floorAmount,
+        wallType: inputValues.wallType,
+        wallWidth: inputValues.wallWidth,
+        percentageOpen: inputValues.percentageOpen,
+        floorType: inputValues.floorType,
+        floorHeight: inputValues.floorHeight,
+        roofType: inputValues.roofType,
+        roofHeight: inputValues.roofHeight,
+        facadeType: inputValues.facadeType,
+        facadeWidth: inputValues.facadeWidth
     }})
     .then(response => {        
         // On success, pass the building value to parent class then call for Results screen.
@@ -120,11 +197,11 @@ export default class ScreenProperties extends Component {
       <div>
         <InfoModal show={this.state.showModal} onCloseInfoModel={this.onCloseInfoModel}></InfoModal>
         <div className='container vh-100'>
-          <div className='row padding-top-2 text-center'>
+          <div className='row padding-top-3 text-center'>
             <h2>{this.props.buildingInfo.street} {this.props.buildingInfo.number}</h2>
             <h5>{this.props.buildingInfo.postal}, {this.props.buildingInfo.city}</h5>
           </div>
-          <div className='row padding-top-3'>
+          <div className='row padding-top-4'>
             <div className='col'>
               <h4>Geometrie
                 <button onClick={this.onShowInfoModal}><img alt='Toon meer informatie' className='info-img' src={image} height={25} width={25}></img></button>
@@ -166,122 +243,87 @@ export default class ScreenProperties extends Component {
               <input type='number' min='0' max='99' step='1' value={this.state.inputFloorAmount} onChange={this.onChangeFloorAmount} name="input-floorAmount" className="form-control"/>
             </div>
           </div>
-          <div className='row padding-top-3'>
+          <div className='row padding-top-4'>
             <div className='col'>
-              <h4>Fundering</h4>
-              <label>Type</label>
-              <select onChange={this.onChangeFoundationType} className="form-control custom-select" name="input-foundationType" id='input-foundationType'>
+              <h4>Muren</h4>
+              <label>Constructie</label>
+              <select onChange={this.onChangeWallType} className="form-control custom-select" name="input-wallType" id='input-wallType'>
                 <option value=''></option>
-                <option value='Op staal'>Fundering op staal</option>
-                <option value='Betonpalen'>Betonpalen</option>
-                <option value='Houten palen'>Houten palen</option>
-              </select>
-            </div>
-          </div>
-          {this.state.inputFoundationType.includes('palen') &&
-          <Fade>
-            <div className='row padding-top-1'>
-              <div className='col'>
-                <label>Funderingsdiepte</label>
-                <div className='suffix-longer'>m</div>
-                <input type='number' min='0.0' max='20.0' step='0.1' value={this.state.inputFoundationDepth} onChange={this.onChangeFoundationDepth} name="input-foundationDepth" className="form-control"/>
-              </div>
-            </div>
-          </Fade>
-          }
-          <div className='row padding-top-3'>
-            <div className='col'>
-              <h4>Hoofddraagconstructie</h4>
-              <label>Type</label>
-              <select onChange={this.onChangeSupport} className="form-control custom-select" name="input-supportType" id='input-supportType'>
-                <option value=''></option>
-                <option value='Staal'>Staal</option>
                 <option value='Beton'>Beton</option>
+                <option value='Staal'>Staal</option>
                 <option value='Metselwerk'>Metselwerk</option>
               </select>
             </div>
+            <div className='col'>
+              <h4> ‌‌ </h4>
+              <label>Dikte</label>
+              <div className='suffix-longer'>m</div>
+              <input type='number' min='0.0' max='5.0' step='0.1' value={this.state.inputWallWidth} onChange={this.onChangeWallWidth} name="input-wallWidth" id='input-wallWidth' className="form-control"/>
+            </div>
           </div>
-          <div className='row padding-top-3'>
+          <div className='row padding-top-1'>
+            <div className='col'>
+              <label>Percentage open</label>
+              <div className='suffix'>%</div>
+              <input type='number' min='0' max='99' step='1' value={this.state.inputPercentageOpen} onChange={this.onChangePercentageOpen} name="input-percentageOpen" id='input-percentageOpen' className="form-control"/>
+            </div>
+          </div>
+          <div className='row padding-top-4'>
             <div className='col'>
               <h4>Vloeren</h4>
-              <label>Type constructievloer</label>
-              <select onChange={this.onChangeSupport} className="form-control custom-select" name="input-constructionFloor">
+              <label>Constructie</label>
+              <select onChange={this.onChangeFloorType} className="form-control custom-select" name="input-floorType">
                 <option value=''></option>
-                <option value='Beton (Gestort)'>Beton (Gestort)</option>
-                <option value='Beton (Prefab)'>Beton (Prefab)</option>
-                <option value='Cellenbeton'>Cellenbeton</option>
-                <option value='Keramisch'>Keramisch</option>
+                <option value='Beton'>Beton</option>
+                <option value='Hout'>Hout</option>
+              </select>
+            </div>
+            <div className='col'>
+              <h4> ‌‌ </h4>
+              <label>Dikte</label>
+              <div className='suffix-longer'>m</div>
+              <input type='number' min='0.0' max='5.0' step='0.1' value={this.state.inputFloorHeight} onChange={this.onChangeFloorHeight} name="input-floorHeight" id='input-floorHeight' className="form-control"/>
+            </div>
+          </div>
+          <div className='row padding-top-4'>
+            <div className='col'>
+              <h4>Dak</h4>
+              <label>Constructie</label>
+              <select onChange={this.onChangeRoofType} className="form-control custom-select" name="input-roofType">
+                <option value=''></option>
+                <option value='Beton'>Beton</option>
+                <option value='Hout'>Hout</option>
+              </select>
+            </div>
+            <div className='col'>
+              <h4> ‌‌ </h4>
+              <label>Dikte</label>
+              <div className='suffix-longer'>m</div>
+              <input type='number' min='0.0' max='5.0' step='0.1' value={this.state.inputRoofHeight} onChange={this.onChangeRoofHeight} name="input-roofHeight" id='input-roofHeight' className="form-control"/>
+            </div>
+          </div>
+          <div className='row padding-top-4'>
+            <div className='col'>
+              <h4>Gevel</h4>
+              <label>Gevelbekleding</label>
+              <select onChange={this.onChangeFacadeType} className="form-control custom-select" name="input-facadeType">
+                <option value=''></option>
+                <option value='Beton'>Beton</option>
                 <option value='Staal'>Staal</option>
+                <option value='Metselwerk'>Metselwerk</option>
                 <option value='Hout'>Hout</option>
+                <option value='Aluminium'>Aluminium</option>
+                <option value='Glas'>Glas</option>
               </select>
             </div>
-          </div>
-          <div className='row padding-top-1'>
             <div className='col'>
-              <label>Type dekvloer</label>
-              <select onChange={this.onChangeSupport} className="form-control custom-select" name="input-equalityFloor">
-                <option value=''></option>
-                <option value='Beton'>Beton (Gestort)</option>
-                <option value='Zandcement'>Zandcement</option>
-                <option value='Anhydriet'>Anhydriet</option>
-                <option value='Magnesiet'>Magnesiet</option>
-                <option value='Hout'>Hout</option>
-                <option value='Asfalt'>Asfalt</option>
-              </select>
-            </div>
-          </div>
-          <div className='row padding-top-1'>
-            <div className='col'>
-              <label>Type afwerking</label>
-              <select onChange={this.onChangeSupport} className="form-control custom-select" name="input-finishFloor">
-                <option value=''></option>
-                <option value='Gietvloer'>Gietvloer</option>
-                <option value='Tapijt'>Tapijt</option>
-                <option value='Hout (parket)'>Hout (parket)</option>
-                <option value='PVC'>PVC</option>
-                <option value='Linoleum'>Linoleum</option>
-                <option value='Laminaat'>Laminaat</option>
-                <option value='Natuursteen'>Natuursteen</option>
-              </select>
+              <h4> ‌‌ </h4>
+              <label>Dikte</label>
+              <div className='suffix-longer'>m</div>
+              <input type='number' min='0.0' max='5.0' step='0.1' value={this.state.inputFacadeWidth} onChange={this.onChangeFacadeWidth} name="input-facadeWidth" id='input-facadeWidth' className="form-control"/>
             </div>
           </div>
           <div className='row padding-top-3'>
-            <div className='col'>
-              <h4>Gevel</h4>
-              <label>Type gevelbekleding</label>
-              <select onChange={this.onChangeSupport} className="form-control custom-select" name="input-supportType">
-                <option value=''></option>
-                <option value='Metselwerk'>Metselwerk</option>
-                <option value='Beton'>Beton</option>
-                <option value='Staal'>Staal</option>
-                <option value='Glas'>Glas</option>
-                <option value='Aluminium'>Aluminium</option>
-                <option value='Natuursteen'>Natuursteen</option>
-                <option value='Kunststof'>Kunststof</option>
-                <option value='Tegelwerk'>Tegelwerk</option>
-                <option value='Hout'>Hout</option>
-              </select>
-            </div>
-          </div>
-          <div className='row padding-top-1'>
-            <div className='col'>
-              <label>Type kozijn</label>
-              <select onChange={this.onChangeSupport} className="form-control custom-select" name="input-supportType">
-                <option value=''></option>
-                <option value='Staal'>Staal</option>
-                <option value='Aluminium'>Aluminium</option>
-                <option value='Hout'>Hout</option>
-                <option value='Kunststof'>Kunststof</option>
-              </select>
-            </div>
-          </div>
-          <div className='row padding-top-1'>
-            <div className='col'>
-              <label>Percentage glas</label>
-              <input type='number' min='0' max='100' step='1' name="input-percentageOpen" className="form-control"/>
-            </div>
-          </div>
-          <div className='row padding-top-2'>
             <div className='col'>
               <Button id='btn-back' variant="outline-primary" onClick={this.onReturn}>Vorige</Button>
               <Button id='btn-continue' variant="primary" onClick={this.onCalculate}>Bereken restwaarde</Button>

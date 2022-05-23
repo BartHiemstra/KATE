@@ -7,31 +7,6 @@ const materialSchema = new Schema({
       required: true,
       trim: true,
   },
-  componentName: { 
-      type: String, 
-      required: true,
-      trim: true,
-  },
-  labelName: { 
-    type: String, 
-    required: true,
-    trim: true,
-  },
-  materialName: {
-    type: String,
-    required: true,
-    trim: true,
-  },
-  unitType: {
-      type: String, 
-      required: true,
-      trim: true,
-  },
-  pricePerUnit: {
-      type: Number, 
-      required: true,
-      trim: true,
-  },
   weight: {
     type: Number,
     required: true,

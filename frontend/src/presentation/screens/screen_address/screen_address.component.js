@@ -3,7 +3,7 @@ import Autocomplete from "react-google-autocomplete";
 
 // Import associated business logic functions.
 import { GetPostalAndHouseNumber } from '../../../business/places.js';
-import { GetBuildingInfo } from '../../../business/building.js';
+import { GetBuildingInfo } from '../../../business/requests.js';
 
 // Import associated style sheet.
 import './screen_address.css';

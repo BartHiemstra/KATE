@@ -5,42 +5,53 @@ async function calculateResidualValue(input) {
     var area = parseFloat(input.area);
     var length = parseFloat(input.length);
     var height = parseFloat(input.height);
-
     var floorAmount = parseFloat(input.floorAmount);
-    var foundationType = String(input.foundationType);
-    var foundationDepth = String(input.foundationDepth);
-    var supportType = String(input.supportType);
+    var wallType = String(input.wallType);
+    var wallWidth = parseFloat(input.wallWidth);
+    var percentageOpen = parseFloat(input.percentageOpen);
+    var floorType = String(input.floorType);
+    var floorHeight = parseFloat(input.floorHeight);
+    var roofType = String(input.roofType);
+    var roofHeight = parseFloat(input.roofHeight);
+    var facadeType = String(input.facadeType);
+    var facadeWidth = parseFloat(input.facadeWidth);
 
-    // todo var namen aanpassen
-   // const [ componentName, labelName, materialName ] = foundationType.split('.');
-    const materialFoundationType = await getMaterialByName(foundationType.split('.')[0], foundationType.split('.')[1], foundationType.split('.')[2])    
-    const materialSupportType = await getMaterialByName(supportType.split('.')[0], supportType.split('.')[1], supportType.split('.')[2]);
+    const TONNE_MASS = 1000;
+    const materialWall = await getMaterialByName(wallType);
+    const materialFloor = await getMaterialByName(floorType);
+    const materialRoof = await getMaterialByName(roofType);
+    const materialFacade = await getMaterialByName(facadeType);
 
-    //TODO: Make nameless, so that they can be read out in for() loop in frontend for better modularity.
-    var residualValue = {
-        foundationPikes: {
-            name: 'Funderingspalen',
-            material: materialFoundationType.materialName,
-            unitType: materialFoundationType.unitType,
-            total: (1/9) * parseFloat(area) * 0.40 * 0.40 * foundationDepth * materialFoundationType.weight / 1000,
-            value:  (1/9) * parseFloat(area) * 0.40 * 0.40 * foundationDepth * materialFoundationType.weight / 1000 * materialFoundationType.value
+    var residualValue = [
+        {
+            name: 'Muren',
+            material: materialWall.name,
+            total: wallWidth * length * height * materialWall.weight / TONNE_MASS, //TODO: PERCENTAGE OPEN VERWERKEN
+            value: wallWidth * length * height * materialWall.weight / TONNE_MASS * materialWall.value
         },
-        foundationBeams: {
-            name: 'Funderingsbalken',
-            material: materialFoundationType.materialName,
-            unitType: materialFoundationType.unitType,
-            total: (1/6) * (length / 2) * 0.40 * 0.60 * materialFoundationType.weight / 1000,
-            value: (1/6) * (length / 2) * 0.40 * 0.60 * materialFoundationType.weight / 1000 * materialFoundationType.value
+        {
+            name: 'Vloeren',
+            material: materialFloor.name,
+            total: floorHeight * floorAmount * area * materialFloor.weight / TONNE_MASS,
+            value: floorHeight * floorAmount * area * materialFloor.weight / TONNE_MASS * materialWall.value
         },
-        supportType: {
-            name: 'Hoofddraagconstructie',
-            material: materialSupportType.materialName,
-            unitType: materialSupportType.unitType,
-            total: ((0.3 * (floorAmount + 1) * area) + (0.2 * length * height)) * materialSupportType.weight / 1000,
-            value: ((0.3 * (floorAmount + 1) * area) + (0.2 * length * height)) * materialSupportType.weight / 1000 * materialSupportType.value
+        {
+            name: 'Dak',
+            material: materialRoof.name,
+            total: roofHeight * area * materialRoof.weight / TONNE_MASS,
+            value: roofHeight * area * materialRoof.weight / TONNE_MASS * materialRoof.value
+        },
+        {
+            name: 'Gevelbekleding',
+            material: materialFacade.name,
+            total: facadeWidth * length * height * materialFacade.weight / TONNE_MASS,
+            value: facadeWidth * length * height * materialFacade.weight / TONNE_MASS * materialFacade.value
         }
-    }
-    residualValue['total'] = { value: (residualValue.foundationPikes.value + residualValue.foundationBeams.value + residualValue.supportType.value) }
+    ];
+   /* residualValue.push({
+        value: residualValue.walls.value + residualValue.floors.value + residualValue.roof.value + residualValue.facade.value
+    });
+    */
 
     return residualValue;
 }
