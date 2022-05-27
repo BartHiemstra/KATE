@@ -1,0 +1,41 @@
+{
+    "title": "Residual Value Calculation",
+    "input_address": "Address",
+
+    "section_geometry": "Geometry",
+    "label_height": "Height",
+    "label_circumference": "Circumference",
+    "label_surface": "Surface",
+    "label_buildinglayers": "Building layers",
+
+    "section_walls": "Walls",
+    "label_construction_walls": "Construction",
+    "label_percentage_open_walls": "Percentage open",
+
+    "section_floors": "Floors",
+    "label_construction_floors": "Construction",
+
+    "section_roof": "Roof",
+    "label_construction_roof": "Construction",
+
+    "section_facade": "Facade",
+    "label_cladding_facade": "Cladding",
+
+    "label_thickness": "Thickness",
+
+    "button_back": "Back",
+    "button_calculate": "Calculate",
+    "button_export": "Export as PDF",
+
+    "label_residualvalue": "Residual value:",
+    "table_descriptor": "The calculated residual value is based on the following elements:",
+    "walls": "Walls",
+    "floors": "Floors",
+    "roof": "Roof",
+    "facade_cladding": "Facade cladding",
+    "table_material": "Material",
+    "table_mass": "Mass",
+    "table_residualvalue": "Residual value",
+
+    "metric_ton": "metric ton"
+}

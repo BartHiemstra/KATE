@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Button } from 'react-bootstrap';
+import { withTranslation } from 'react-i18next'
 import axios from 'axios';
 
 import image from '../../../assets/images/icon_info.png';
@@ -9,7 +10,7 @@ import './screen_properties.css';
 
 const API_BASE_URL = process.env.REACT_APP_BASE_URL;
 
-export default class ScreenProperties extends Component {
+class ScreenProperties extends Component {
   constructor(props) {
     super(props);
 
@@ -191,7 +192,9 @@ export default class ScreenProperties extends Component {
   }
 
   render() {
-    //TODO: Fill the dropdown menus with options based on API GET request instead of manually in html.
+    // Retrieve i18n translation data.
+    const { t } = this.props;
+
     return (
       <div>
         <InfoModal show={this.state.showModal} onCloseInfoModel={this.onCloseInfoModel}></InfoModal>
@@ -202,7 +205,7 @@ export default class ScreenProperties extends Component {
           </div>
           <div className='row padding-top-4'>
             <div className='col'>
-              <h4>Geometrie
+              <h4>{t('section_geometry')}
                 <button onClick={this.onShowInfoModal}><img alt='Toon meer informatie' className='info-img' src={image} height={25} width={25}></img></button>
               </h4>
             </div>
@@ -210,7 +213,7 @@ export default class ScreenProperties extends Component {
           {this.props.buildingInfo.height > 0 && 
             <div className='row'>
               <div className='col'>
-                <label>Hoogte</label>
+                <label>{t('label_height')}</label>
                 <input readOnly value={parseFloat(this.props.buildingInfo.height).toFixed(1) + ' m'} name="geometry-height" className="form-control"/>
               </div>
             </div>
@@ -218,7 +221,7 @@ export default class ScreenProperties extends Component {
           {this.props.buildingInfo.height === 0 &&
             <div className='row'>
               <div className='col'>
-                <label>Hoogte in meters</label>
+                <label>{t('label_height')}</label>
                 <div className={this.state.inputHeight.length > 2 ? 'suffix-longer' : 'suffix'}>m</div>
                 <input type='number' min='0' max='200' step='0.1' value={this.state.inputHeight} onChange={this.onChangeHeight} name="input-height" className="form-control" onKeyDown={ (evt) => evt.key === 'e' && evt.preventDefault() }/>
               </div>
@@ -226,26 +229,26 @@ export default class ScreenProperties extends Component {
           }
           <div className='row padding-top-1'>
             <div className='col'>
-              <label>Omtrek</label>
+              <label>{t('label_circumference')}</label>
               <input readOnly type="text" value={Math.round(this.props.buildingInfo.length) + ' m'} name="geometry-length" className="form-control"/>
             </div>
           </div>
           <div className='row padding-top-1'>
             <div className='col'>
-              <label>Oppervlakte</label>
+              <label>{t('label_surface')}</label>
               <input readOnly type="text" value={Math.round(this.props.buildingInfo.area) + ' m2'} name="geometry-area" className="form-control"/>
             </div>
           </div>
           <div className='row padding-top-1'>
             <div className='col'>
-              <label>Aantal bouwlagen</label>
+              <label>{t('label_buildinglayers')}</label>
               <input type='number' min='0' max='99' step='1' value={this.state.inputFloorAmount} onChange={this.onChangeFloorAmount} name="input-floorAmount" className="form-control"/>
             </div>
           </div>
           <div className='row padding-top-4'>
             <div className='col'>
-              <h4>Muren</h4>
-              <label>Constructie</label>
+              <h4>{t('section_walls')}</h4>
+              <label>{t('label_construction_walls')}</label>
               <select onChange={this.onChangeWallType} className="form-control custom-select" name="input-wallType" id='input-wallType'>
                 <option value=''></option>
                 <option value='Beton'>Beton</option>
@@ -255,22 +258,22 @@ export default class ScreenProperties extends Component {
             </div>
             <div className='col'>
               <h4> ‌‌ </h4>
-              <label>Dikte</label>
+              <label>{t('label_thickness')}</label>
               <div className='suffix-longer'>m</div>
               <input type='number' min='0.0' max='5.0' step='0.1' value={this.state.inputWallWidth} onChange={this.onChangeWallWidth} name="input-wallWidth" id='input-wallWidth' className="form-control"/>
             </div>
           </div>
           <div className='row padding-top-1'>
             <div className='col'>
-              <label>Percentage open</label>
+              <label>{t('label_percentage_open_walls')}</label>
               <div className='suffix'>%</div>
               <input type='number' min='0' max='99' step='1' value={this.state.inputPercentageOpen} onChange={this.onChangePercentageOpen} name="input-percentageOpen" id='input-percentageOpen' className="form-control"/>
             </div>
           </div>
           <div className='row padding-top-4'>
             <div className='col'>
-              <h4>Vloeren</h4>
-              <label>Constructie</label>
+              <h4>{t('section_floors')}</h4>
+              <label>{t('label_construction_floors')}</label>
               <select onChange={this.onChangeFloorType} className="form-control custom-select" name="input-floorType" id='input-floorType'>
                 <option value=''></option>
                 <option value='Beton'>Beton</option>
@@ -279,15 +282,15 @@ export default class ScreenProperties extends Component {
             </div>
             <div className='col'>
               <h4> ‌‌ </h4>
-              <label>Dikte</label>
+              <label>{t('label_thickness')}</label>
               <div className='suffix-longer'>m</div>
               <input type='number' min='0.0' max='5.0' step='0.1' value={this.state.inputFloorHeight} onChange={this.onChangeFloorHeight} name="input-floorHeight" id='input-floorHeight' className="form-control"/>
             </div>
           </div>
           <div className='row padding-top-4'>
             <div className='col'>
-              <h4>Dak</h4>
-              <label>Constructie</label>
+              <h4>{t('section_roof')}</h4>
+              <label>{t('label_construction_roof')}</label>
               <select onChange={this.onChangeRoofType} className="form-control custom-select" name="input-roofType" id='input-roofType'>
                 <option value=''></option>
                 <option value='Beton'>Beton</option>
@@ -296,15 +299,15 @@ export default class ScreenProperties extends Component {
             </div>
             <div className='col'>
               <h4> ‌‌ </h4>
-              <label>Dikte</label>
+              <label>{t('label_thickness')}</label>
               <div className='suffix-longer'>m</div>
               <input type='number' min='0.0' max='5.0' step='0.1' value={this.state.inputRoofHeight} onChange={this.onChangeRoofHeight} name="input-roofHeight" id='input-roofHeight' className="form-control"/>
             </div>
           </div>
           <div className='row padding-top-4'>
             <div className='col'>
-              <h4>Gevel</h4>
-              <label>Gevelbekleding</label>
+              <h4>{t('section_facade')}</h4>
+              <label>{t('label_cladding_facade')}</label>
               <select onChange={this.onChangeFacadeType} className="form-control custom-select" name="input-facadeType" id='input-facadeType'>
                 <option value=''></option>
                 <option value='Beton'>Beton</option>
@@ -317,15 +320,15 @@ export default class ScreenProperties extends Component {
             </div>
             <div className='col'>
               <h4> ‌‌ </h4>
-              <label>Dikte</label>
+              <label>{t('label_thickness')}</label>
               <div className='suffix-longer'>m</div>
               <input type='number' min='0.0' max='5.0' step='0.1' value={this.state.inputFacadeWidth} onChange={this.onChangeFacadeWidth} name="input-facadeWidth" id='input-facadeWidth' className="form-control"/>
             </div>
           </div>
           <div className='row padding-top-3'>
             <div className='col'>
-              <Button id='btn-back' variant="outline-primary" onClick={this.onReturn}>Vorige</Button>
-              <Button id='btn-continue' variant="primary" onClick={this.onCalculate}>Bereken restwaarde</Button>
+              <Button id='btn-back' variant="outline-primary" onClick={this.onReturn}>{t('button_back')}</Button>
+              <Button id='btn-continue' variant="primary" onClick={this.onCalculate}>{t('button_calculate')}</Button>
             </div>
           </div>
           <div className='padding-bottom-2'></div>
@@ -334,3 +337,6 @@ export default class ScreenProperties extends Component {
     )
   }
 }
+
+// Export with i18n translation.
+export default withTranslation()(ScreenProperties);

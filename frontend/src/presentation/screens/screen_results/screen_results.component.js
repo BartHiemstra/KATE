@@ -1,39 +1,22 @@
 import React, { Component } from 'react';
 import { Accordion, Button, Table } from 'react-bootstrap';
-import axios from 'axios';
+import { withTranslation } from 'react-i18next'
 
 import './screen_results.css';
 
 const API_BASE_URL = process.env.REACT_APP_BASE_URL;
 
-export default class ScreenProperties extends Component {
+class ScreenResults extends Component {
   constructor(props) {
     super(props);
     
     this.format = this.format.bind(this);
     this.onReturn = this.onReturn.bind(this);
-    this.pushAPI = this.pushAPI.bind(this);
   }
 
   onReturn() {
     this.props.showComponent('Properties')
   }
-
-  
-  //Testing API
-  pushAPI() {
-    const material = {
-      name: 'Hout',
-      componentName: 'Hoofddraagconstructie',
-      labelName: 'type',
-      unitType: 'm3',
-      pricePerUnit: 5.50
-    }
-
-    axios.get(API_BASE_URL + 'materials/add', material)
-      .then(result => console.log(result.data));
-  }
-  
 
   // Format the input value to a more readable version.
   format(value) {
@@ -50,9 +33,19 @@ export default class ScreenProperties extends Component {
   }
 
   render() {
-    console.log(this.props.residualValue);
-    const data = Array.from(this.props.residualValue);
+    // Retrieve i18n translation data.
+    const { t } = this.props;
+
+    // Convert residual value data to array.
+    let data = Array.from(this.props.residualValue);
+
+    // Get the total residual value from the last entry in the data array.
+    let totalResidualValue = data[data.length - 1].value;
+    
+    // Then remove that last entry so it doesn't get displayed when iterating through the array for table display.
+    data.pop();
     console.log(data);
+    
     return (
       <div>
         <div className='container vh-100'>
@@ -62,30 +55,28 @@ export default class ScreenProperties extends Component {
           </div>
           <div className='row padding-top-3'>
             <div className='card'>
-                <label id='label-residualValue' className='padding-top-1'>Restwaarde: <b>€ {this.format(1)}</b></label>
+                <h4 id='label-residualValue' className='padding-top-1'>{t('label_residualvalue')} <b>€ {this.format(totalResidualValue)}</b></h4>
             </div>
           </div>
           <div className='row padding-top-3'>
-            <h6>De gegeven materiële restwaarde voor dit pand is opgebouwd uit de volgende elementen:</h6>
+            <h6>{t('table_descriptor')}</h6>
             {data.map(item => (
               <Accordion alwaysOpen>
                 <Accordion.Item eventKey="0">
-                <Accordion.Header>item.name</Accordion.Header>
+                <Accordion.Header> {t(item.name)} </Accordion.Header>
                 <Accordion.Body>
                   <Table responsive style={{ whiteSpace: 'nowrap' }}>
                     <thead>
                       <tr>
-                        <th>Onderdeel</th>
-                        <th>Materiaal</th>
-                        <th>Totaal</th>
-                        <th>Restwaarde</th>
+                        <th>{t('table_material')}</th>
+                        <th>{t('table_mass')}</th>
+                        <th>{t('table_residualvalue')}</th>
                       </tr>
                     </thead>
                     <tbody>
                       <tr>
-                        <td>{ item.name}</td>
                         <td>{ item.material }</td>
-                        <td>{ item.total }</td>
+                        <td>{ Math.round(item.total) } {t('metric_ton')}</td>
                         <td>€ {this.format(item.value)}</td>
                       </tr>
                     </tbody>
@@ -97,12 +88,16 @@ export default class ScreenProperties extends Component {
           </div>
           <div className='row padding-top-2'>
             <div className='col'>
-              <Button variant="outline-primary" onClick={this.onReturn}>Vorige</Button>
-              <Button variant="primary" onClick={this.pushAPI}>Opslaan als PDF</Button>
+              <Button variant="outline-primary" onClick={this.onReturn}>{t('button_back')}</Button>
+              <Button variant="primary" onClick={console.log('hi')}>{t('button_export')}</Button>
             </div>
           </div>
+          <div className='padding-bottom-2'></div>
         </div>
       </div>
     )
   }
 }
+
+// Export with i18n translation.
+export default withTranslation()(ScreenResults);

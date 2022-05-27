@@ -1,0 +1,41 @@
+{
+    "title": "Materiële restwaarde berekenen",
+    "input_address": "Adres",
+
+    "section_geometry": "Geometrie",
+    "label_height": "Hoogte",
+    "label_circumference": "Omtrek",
+    "label_surface": "Oppervlakte",
+    "label_buildinglayers": "Aantal bouwlagen",
+
+    "section_walls": "Muren",
+    "label_construction_walls": "Constructie",
+    "label_percentage_open_walls": "Percentage open",
+
+    "section_floors": "Vloeren",
+    "label_construction_floors": "Constructie",
+
+    "section_roof": "Dak",
+    "label_construction_roof": "Constructie",
+
+    "section_facade": "Gevel",
+    "label_cladding_facade": "Gevelbekleding",
+
+    "label_thickness": "Dikte",
+
+    "button_back": "Terug",
+    "button_calculate": "Berekenen",
+    "button_export": "Exporteer als PDF",
+
+    "label_residualvalue": "Restwaarde:",
+    "table_descriptor": "De gegeven materiële restwaarde voor dit pand is opgebouwd uit de volgende elementen:",
+    "walls": "Muren",
+    "floors": "Vloeren",
+    "roof": "Dak",
+    "facade_cladding": "Gevelbekleding",
+    "table_material": "Materiaal",
+    "table_mass": "Massa",
+    "table_residualvalue": "Restwaarde",
+
+    "metric_ton": "ton"
+}

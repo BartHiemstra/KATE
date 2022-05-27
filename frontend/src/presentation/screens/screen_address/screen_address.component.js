@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Autocomplete from "react-google-autocomplete";
+import { withTranslation } from 'react-i18next'
 
 // Import associated business logic functions.
 import { GetPostalAndHouseNumber } from '../../../business/places.js';
@@ -11,14 +12,16 @@ import './screen_address.css';
 // Retrieve Google Places API Key from environment file.
 const GOOGLE_API_KEY = process.env.REACT_APP_API_GOOGLE_PLACES;
 
-export default class ScreenAddress extends Component {
+class ScreenAddress extends Component {
     render() {
+        // Retrieve i18n translation data.
+        const { t } = this.props;
         return (
             <div>
                 <div className='background-img'></div>
                 <div className='container vh-100'>
                     <div className='row semi-center'>
-                        <h3>Materiële restwaarde berekenen</h3>
+                        <h3>{t('title')}</h3>
                     </div>
                     <div className='row'>
                         <div className='col'>
@@ -27,7 +30,7 @@ export default class ScreenAddress extends Component {
                                 autoFocus={true}
                                 spellCheck={false}
                                 language={'NL'}
-                                placeholder="Adres"
+                                placeholder={t('input_address')}
                                 options={{ types: ['address'], componentRestrictions: { country: 'nl' } }}
                                 apiKey={ GOOGLE_API_KEY }
                                 onPlaceSelected={(place) => {
@@ -49,3 +52,6 @@ export default class ScreenAddress extends Component {
         )
     }
 }
+
+// Export with i18n translation.
+export default withTranslation()(ScreenAddress);
