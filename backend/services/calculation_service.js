@@ -22,12 +22,15 @@ async function calculateResidualValue(input) {
     const materialRoof = await getMaterialByName(roofType);
     const materialFacade = await getMaterialByName(facadeType);
 
+    // Calculate residual mass of materials by taking their volume, multiplying by material-specific weight, and then dividing by 1000 to get the amount of tonnes.
+    // Then calculate residual value by multiplying material mass by its value per tonne.
+    // Where applicable, reduce material mass by taking out its open percentage value.
     var residualValue = [
         {
             name: 'Muren',
             material: materialWall.name,
-            total: wallWidth * length * height * materialWall.weight / TONNE_MASS, //TODO: PERCENTAGE OPEN VERWERKEN
-            value: wallWidth * length * height * materialWall.weight / TONNE_MASS * materialWall.value
+            total: wallWidth * length * height * materialWall.weight / TONNE_MASS * (1 - percentageOpen / 100),
+            value: wallWidth * length * height * materialWall.weight / TONNE_MASS * (1 - percentageOpen / 100) * materialWall.value
         },
         {
             name: 'Vloeren',
@@ -44,14 +47,15 @@ async function calculateResidualValue(input) {
         {
             name: 'Gevelbekleding',
             material: materialFacade.name,
-            total: facadeWidth * length * height * materialFacade.weight / TONNE_MASS,
-            value: facadeWidth * length * height * materialFacade.weight / TONNE_MASS * materialFacade.value
+            total: facadeWidth * length * height * materialFacade.weight / TONNE_MASS * (1 - percentageOpen / 100),
+            value: facadeWidth * length * height * materialFacade.weight / TONNE_MASS * (1 - percentageOpen / 100) * materialFacade.value
         }
     ];
-   /* residualValue.push({
-        value: residualValue.walls.value + residualValue.floors.value + residualValue.roof.value + residualValue.facade.value
+    // Calculate total residual value and add to the residualValue array.
+    residualValue.push({
+        name: 'Total',
+        value: residualValue[0].value + residualValue[1].value + residualValue[2].value + residualValue[3].value
     });
-    */
 
     return residualValue;
 }
