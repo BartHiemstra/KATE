@@ -1,6 +1,5 @@
 describe('User Story 2 - Enter properties', () => {
     it('Start app', () => {
-        // Arrange
         cy.visit('http://localhost:3000')
         cy.wait(3000)
 
@@ -15,9 +14,10 @@ describe('User Story 2 - Enter properties', () => {
     it('Fill out properties, then press continue button.', () => {
         // Act
         cy.get('input[name="input-floorAmount"]').type('8').wait(500)
-        cy.get('#input-foundationType').select('Betonpalen').wait(500)
-        cy.get('input[name="input-foundationDepth"]').type('12.5').wait(500)
-        cy.get('#input-supportType').select('Beton').wait(500)
+        cy.get('#input-wallType').select('Beton').wait(500)
+        cy.get('#input-floorType').select('Beton').wait(500)
+        cy.get('#input-roofType').select('Beton').wait(500)
+        cy.get('#input-facadeType').select('Beton').wait(500)
 
         cy.get('#btn-continue').click()
 
