@@ -27,25 +27,25 @@ async function calculateResidualValue(input) {
     // Where applicable, reduce material mass by taking out its open percentage value.
     var residualValue = [
         {
-            name: 'Muren',
+            name: 'walls',
             material: materialWall.name,
             total: wallWidth * length * height * materialWall.weight / TONNE_MASS * (1 - percentageOpen / 100),
             value: wallWidth * length * height * materialWall.weight / TONNE_MASS * (1 - percentageOpen / 100) * materialWall.value
         },
         {
-            name: 'Vloeren',
+            name: 'floors',
             material: materialFloor.name,
             total: floorHeight * floorAmount * area * materialFloor.weight / TONNE_MASS,
             value: floorHeight * floorAmount * area * materialFloor.weight / TONNE_MASS * materialWall.value
         },
         {
-            name: 'Dak',
+            name: 'roof',
             material: materialRoof.name,
             total: roofHeight * area * materialRoof.weight / TONNE_MASS,
             value: roofHeight * area * materialRoof.weight / TONNE_MASS * materialRoof.value
         },
         {
-            name: 'Gevelbekleding',
+            name: 'facade_cladding',
             material: materialFacade.name,
             total: facadeWidth * length * height * materialFacade.weight / TONNE_MASS * (1 - percentageOpen / 100),
             value: facadeWidth * length * height * materialFacade.weight / TONNE_MASS * (1 - percentageOpen / 100) * materialFacade.value
@@ -53,7 +53,7 @@ async function calculateResidualValue(input) {
     ];
     // Calculate total residual value and add to the residualValue array.
     residualValue.push({
-        name: 'Total',
+        name: 'total',
         value: residualValue[0].value + residualValue[1].value + residualValue[2].value + residualValue[3].value
     });
 
