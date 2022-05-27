@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Button } from 'react-bootstrap';
 import axios from 'axios';
 
-import { GetBuildingInfo } from '../../../business/requests.js';
 import image from '../../../assets/images/icon_info.png';
 import InfoModal from '../../modal/info_modal.component';
 
@@ -89,7 +88,7 @@ export default class ScreenProperties extends Component {
 
   onChangePercentageOpen(e) {
     var percentageOpen = e.target.value;
-    if(percentageOpen < 0 || percentageOpen > 99 || percentageOpen % 1 != 0) {
+    if(percentageOpen < 0 || percentageOpen > 99 || percentageOpen % 1 !== 0) {
       percentageOpen = '';
     }
     this.setState({ inputPercentageOpen: percentageOpen })
@@ -272,7 +271,7 @@ export default class ScreenProperties extends Component {
             <div className='col'>
               <h4>Vloeren</h4>
               <label>Constructie</label>
-              <select onChange={this.onChangeFloorType} className="form-control custom-select" name="input-floorType">
+              <select onChange={this.onChangeFloorType} className="form-control custom-select" name="input-floorType" id='input-floorType'>
                 <option value=''></option>
                 <option value='Beton'>Beton</option>
                 <option value='Hout'>Hout</option>
@@ -289,7 +288,7 @@ export default class ScreenProperties extends Component {
             <div className='col'>
               <h4>Dak</h4>
               <label>Constructie</label>
-              <select onChange={this.onChangeRoofType} className="form-control custom-select" name="input-roofType">
+              <select onChange={this.onChangeRoofType} className="form-control custom-select" name="input-roofType" id='input-roofType'>
                 <option value=''></option>
                 <option value='Beton'>Beton</option>
                 <option value='Hout'>Hout</option>
@@ -306,7 +305,7 @@ export default class ScreenProperties extends Component {
             <div className='col'>
               <h4>Gevel</h4>
               <label>Gevelbekleding</label>
-              <select onChange={this.onChangeFacadeType} className="form-control custom-select" name="input-facadeType">
+              <select onChange={this.onChangeFacadeType} className="form-control custom-select" name="input-facadeType" id='input-facadeType'>
                 <option value=''></option>
                 <option value='Beton'>Beton</option>
                 <option value='Staal'>Staal</option>
