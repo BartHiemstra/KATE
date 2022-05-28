@@ -37,5 +37,11 @@
     "table_mass": "Massa",
     "table_residualvalue": "Restwaarde",
 
-    "metric_ton": "ton"
+    "metric_ton": "ton",
+
+    "info_geometry": "Geometric data of the building.\nHeight, circumference and surface are calculated using the Kadaster BAG API.",
+    "info_walls": "Material of the walls used for construction, with their thickness in meters.\n\n'Percentage open' corresponds to the amount of window-openings in the building.",
+    "info_floors": "Material of the floors used for construction, with their thickness, or height, in meters.",
+    "info_roof": "Material of the roof used for construction, with its thickness, or height, in meters.",
+    "info_facade": "Material of the facade used for construction, with its thickness in meters."
 }

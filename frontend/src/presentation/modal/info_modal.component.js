@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { Modal, Button } from 'react-bootstrap';
-import info_text from './info_text.js';
 
 export default class InfoModal extends Component {
     constructor(props) {
@@ -10,19 +9,25 @@ export default class InfoModal extends Component {
     }
     
     onClose() {
-        this.props.onCloseInfoModel();
+        this.props.onCloseInfoModal();
     }
 
     render(){
+        const title = this.props.title;
+        const text = this.props.text;
+        const closeMessage = this.props.closeMessage;
+
         return (
             <Modal show={this.props.show} centered style={{ whiteSpace: 'break-spaces' }}>
-            <Modal.Header>
-                <Modal.Title>{info_text[0].title}</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>{info_text[0].body}</Modal.Body>
-            <Modal.Footer>
-            <Button onClick={this.onClose} variant="primary">Sluiten</Button>
-            </Modal.Footer>
+                <Modal.Header>
+                    <Modal.Title>{title}</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    {text}
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button onClick={this.onClose} variant="primary">{closeMessage}</Button>
+                </Modal.Footer>
             </Modal>
         )
     }

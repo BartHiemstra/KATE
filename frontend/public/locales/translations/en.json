@@ -24,6 +24,7 @@
     "label_thickness": "Thickness",
 
     "button_back": "Back",
+    "button_close": "Close",
     "button_calculate": "Calculate",
     "button_export": "Export as PDF",
 
@@ -37,5 +38,11 @@
     "table_mass": "Mass",
     "table_residualvalue": "Residual value",
 
-    "metric_ton": "metric ton"
+    "metric_ton": "metric ton",
+
+    "info_geometry": "Geometric data of the building.\nHeight, circumference and surface are calculated using the Kadaster BAG API.",
+    "info_walls": "Material of the walls used for construction, with their thickness in meters.\n\n'Percentage open' corresponds to the amount of window-openings in the building.",
+    "info_floors": "Material of the floors used for construction, with their thickness, or height, in meters.",
+    "info_roof": "Material of the roof used for construction, with its thickness, or height, in meters.",
+    "info_facade": "Material of the facade used for construction, with its thickness in meters."
 }
