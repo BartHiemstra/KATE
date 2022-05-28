@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { Accordion, Button, Table } from 'react-bootstrap';
 import { withTranslation } from 'react-i18next'
 
+import { formatMetricTon, formatEuros } from '../../../business/format.js';
+
 import './screen_results.css';
 
 const API_BASE_URL = process.env.REACT_APP_BASE_URL;
@@ -55,7 +57,7 @@ class ScreenResults extends Component {
           </div>
           <div className='row padding-top-3'>
             <div className='card'>
-                <h4 id='label-residualValue' className='padding-top-1'>{t('label_residualvalue')} <b>€ {this.format(totalResidualValue)}</b></h4>
+                <h4 id='label-residualValue' className='padding-top-1'>{t('label_residualvalue')} <b>€ {formatEuros(totalResidualValue, 10000)}</b></h4>
             </div>
           </div>
           <div className='row padding-top-3'>
@@ -71,13 +73,15 @@ class ScreenResults extends Component {
                         <th>{t('table_material')}</th>
                         <th>{t('table_mass')}</th>
                         <th>{t('table_residualvalue')}</th>
+                        <th>{t('table_residualvalueRounded')}</th>
                       </tr>
                     </thead>
                     <tbody>
                       <tr>
                         <td>{ item.material }</td>
-                        <td>{ Math.round(item.total) } {t('metric_ton')}</td>
-                        <td>€ {this.format(item.value)}</td>
+                        <td>{ formatMetricTon(item.total) } {t('metric_ton')}</td>
+                        <td>€ {formatEuros(item.value, 0)}</td>
+                        <td>€ {formatEuros(item.value, 1000)}</td>
                       </tr>
                     </tbody>
                   </Table>
