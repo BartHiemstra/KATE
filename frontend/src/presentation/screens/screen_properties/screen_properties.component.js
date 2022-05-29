@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Button } from 'react-bootstrap';
 import { withTranslation } from 'react-i18next'
-import axios from 'axios';
 
 import { GetResidualValue } from '../../../business/requests.js';
 
@@ -10,8 +9,6 @@ import InfoModal from '../../modal/info_modal.component';
 import LanguageSelector from '../../header/language_selector.component';
 
 import './screen_properties.css';
-
-const API_BASE_URL = process.env.REACT_APP_BASE_URL;
 
 class ScreenProperties extends Component {
   constructor(props) {
@@ -186,7 +183,7 @@ class ScreenProperties extends Component {
             <div className='col'>
               <h4>{t('section_geometry')}
                 <InfoModal show={this.state.showModalGeometry} onCloseInfoModal={this.onCloseInfoModal.bind(this)} title={t('section_geometry')} text={t('info_geometry')} closeMessage={t('button_close')}></InfoModal>
-                <button onClick={this.onShowInfoModalGeometry.bind(this)}><img alt='Toon meer informatie' className='info-img' src={image} height={25} width={25}></img></button>
+                <button onClick={this.onShowInfoModalGeometry.bind(this)} id='img-btn'><img alt='Toon meer informatie' className='info-img' src={image} height={25} width={25}></img></button>
               </h4>
             </div>
           </div>
@@ -229,7 +226,7 @@ class ScreenProperties extends Component {
             <div className='col'>
               <h4>{t('section_walls')}
                 <InfoModal show={this.state.showModalWalls} onCloseInfoModal={this.onCloseInfoModal.bind(this)} title={t('section_walls')} text={t('info_walls')} closeMessage={t('button_close')}></InfoModal>
-                <button onClick={this.onShowInfoModalWalls.bind(this)}><img alt='Toon meer informatie' className='info-img' src={image} height={25} width={25}></img></button>
+                <button onClick={this.onShowInfoModalWalls.bind(this)} id='img-btn'><img alt='Toon meer informatie' className='info-img' src={image} height={25} width={25}></img></button>
               </h4>
               <label>{t('label_construction_walls')}</label>
               <select onChange={this.onChangeWallType.bind(this)} className="form-control custom-select" name="input-wallType" id='input-wallType'>
@@ -257,7 +254,7 @@ class ScreenProperties extends Component {
             <div className='col'>
               <h4>{t('section_floors')}
                 <InfoModal show={this.state.showModalFloors} onCloseInfoModal={this.onCloseInfoModal.bind(this)} title={t('section_floors')} text={t('info_floors')} closeMessage={t('button_close')}></InfoModal>
-                <button onClick={this.onShowInfoModalFloors.bind(this)}><img alt='Toon meer informatie' className='info-img' src={image} height={25} width={25}></img></button>
+                <button onClick={this.onShowInfoModalFloors.bind(this)} id='img-btn'><img alt='Toon meer informatie' className='info-img' src={image} height={25} width={25}></img></button>
               </h4>
               <label>{t('label_construction_floors')}</label>
               <select onChange={this.onChangeFloorType.bind(this)} className="form-control custom-select" name="input-floorType" id='input-floorType'>
@@ -277,7 +274,7 @@ class ScreenProperties extends Component {
             <div className='col'>
               <h4>{t('section_roof')}
                 <InfoModal show={this.state.showModalRoof} onCloseInfoModal={this.onCloseInfoModal.bind(this)} title={t('section_roof')} text={t('info_roof')} closeMessage={t('button_close')}></InfoModal>
-                <button onClick={this.onShowInfoModalRoof.bind(this)}><img alt='Toon meer informatie' className='info-img' src={image} height={25} width={25}></img></button>
+                <button onClick={this.onShowInfoModalRoof.bind(this)} id='img-btn'><img alt='Toon meer informatie' className='info-img' src={image} height={25} width={25}></img></button>
               </h4>
               <label>{t('label_construction_roof')}</label>
               <select onChange={this.onChangeRoofType.bind(this)} className="form-control custom-select" name="input-roofType" id='input-roofType'>
@@ -297,7 +294,7 @@ class ScreenProperties extends Component {
             <div className='col'>
               <h4>{t('section_facade')}
                 <InfoModal show={this.state.showModalFacade} onCloseInfoModal={this.onCloseInfoModal.bind(this)} title={t('section_facade')} text={t('info_facade')} closeMessage={t('button_close')}></InfoModal>
-                <button onClick={this.onShowInfoModalFacade.bind(this)}><img alt='Toon meer informatie' className='info-img' src={image} height={25} width={25}></img></button>
+                <button onClick={this.onShowInfoModalFacade.bind(this)} id='img-btn'><img alt='Toon meer informatie' className='info-img' src={image} height={25} width={25}></img></button>
               </h4>
               <label>{t('label_cladding_facade')}</label>
               <select onChange={this.onChangeFacadeType.bind(this)} className="form-control custom-select" name="input-facadeType" id='input-facadeType'>

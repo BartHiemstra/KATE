@@ -75,7 +75,7 @@
     cursor: pointer;
 }
 
-button, button:hover {
+#img-btn {
     background-color: #00000000;
     border: none;
 }
