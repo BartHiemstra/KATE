@@ -2,9 +2,9 @@ import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 import './i18n'
+import './App.css';
 
 import Home from './presentation/home.component';
-import './App.css';
 
 function App() {
   return (

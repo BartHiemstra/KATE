@@ -34,9 +34,11 @@
     "floors": "Floors",
     "roof": "Roof",
     "facade_cladding": "Facade cladding",
+    "table_constructionElement": "Construction element",
     "table_material": "Material",
-    "table_mass": "Mass",
-    "table_residualvalue": "Residual value",
+    "table_mass": "Amount",
+    "table_residualvalue": "Value",
+    "table_residualvalueRounded": "Rounded value",
 
     "metric_ton": "metric ton",
 

@@ -3,16 +3,17 @@ import { Accordion, Button, Table } from 'react-bootstrap';
 import { withTranslation } from 'react-i18next'
 
 import { formatMetricTon, formatEuros } from '../../../business/format.js';
+import { exportPDF } from '../../../business/export.js';
+
+import LanguageSelector from '../../header/language_selector.component';
 
 import './screen_results.css';
-
-const API_BASE_URL = process.env.REACT_APP_BASE_URL;
 
 class ScreenResults extends Component {
   constructor(props) {
     super(props);
     
-    this.format = this.format.bind(this);
+    this.export = this.export.bind(this);
     this.onReturn = this.onReturn.bind(this);
   }
 
@@ -20,18 +21,18 @@ class ScreenResults extends Component {
     this.props.showComponent('Properties')
   }
 
-  // Format the input value to a more readable version.
-  format(value) {
-    //Round to 2 decimals.
-    var formattedValue = parseFloat(value).toFixed(2);
-    
-    //Swap dot with comma for decimals.
-    formattedValue = formattedValue.replace('.', ',')
-    
-    //Add '.' for every 3 numbers before the decimal.
-    formattedValue = formattedValue.replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.');
+  // Call export function from business, using table data, a table name and the address as filename.
+  export(data) {
+    // Locale data.
+    const { t } = this.props;
 
-    return formattedValue;
+    // Table data.
+    let tableName = this.props.buildingInfo.street + ' ' + this.props.buildingInfo.number + ', ' + this.props.buildingInfo.postal + ' ' + this.props.buildingInfo.city;
+    let fileName = this.props.buildingInfo.street + ' ' + this.props.buildingInfo.number;
+    let residualValueArray = Array.from(this.props.residualValue)
+    let totalResidualValue = residualValueArray[residualValueArray.length - 1].value;
+
+    exportPDF(t, totalResidualValue, data, tableName, fileName);
   }
 
   render() {
@@ -46,11 +47,11 @@ class ScreenResults extends Component {
     
     // Then remove that last entry so it doesn't get displayed when iterating through the array for table display.
     data.pop();
-    console.log(data);
     
     return (
       <div>
         <div className='container vh-100'>
+          <div className='row padding-top-1'><LanguageSelector></LanguageSelector></div>
           <div className='row padding-top-3 text-center'>
             <h2>{this.props.buildingInfo.street} {this.props.buildingInfo.number}</h2>
             <h5>{this.props.buildingInfo.postal}, {this.props.buildingInfo.city}</h5>
@@ -93,7 +94,7 @@ class ScreenResults extends Component {
           <div className='row padding-top-2'>
             <div className='col'>
               <Button variant="outline-primary" onClick={this.onReturn}>{t('button_back')}</Button>
-              <Button variant="primary" onClick={console.log('hi')}>{t('button_export')}</Button>
+              <Button variant="primary" onClick={() => { this.export(data) } }>{t('button_export')}</Button>
             </div>
           </div>
           <div className='padding-bottom-2'></div>

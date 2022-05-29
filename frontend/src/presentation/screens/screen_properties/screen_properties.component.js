@@ -5,6 +5,7 @@ import axios from 'axios';
 
 import image from '../../../assets/images/icon_info.png';
 import InfoModal from '../../modal/info_modal.component';
+import LanguageSelector from '../../header/language_selector.component';
 
 import './screen_properties.css';
 
@@ -14,35 +15,10 @@ class ScreenProperties extends Component {
   constructor(props) {
     super(props);
 
-    this.onChangeHeight = this.onChangeHeight.bind(this);
-    this.onChangeFloorAmount = this.onChangeFloorAmount.bind(this);
-
-    this.onChangeWallType = this.onChangeWallType.bind(this);
-    this.onChangeWallWidth = this.onChangeWallWidth.bind(this);
-    this.onChangePercentageOpen = this.onChangePercentageOpen.bind(this);
-
-    this.onChangeFloorType = this.onChangeFloorType.bind(this);
-    this.onChangeFloorHeight = this.onChangeFloorHeight.bind(this);
-
-    this.onChangeRoofType = this.onChangeRoofType.bind(this);
-    this.onChangeRoofHeight = this.onChangeRoofHeight.bind(this);
-
-    this.onChangeFacadeType = this.onChangeFacadeType.bind(this);
-    this.onChangeFacadeWidth = this.onChangeFacadeWidth.bind(this);
-
-    this.onShowInfoModalGeometry = this.onShowInfoModalGeometry.bind(this);
-    this.onShowInfoModalWalls = this.onShowInfoModalWalls.bind(this);
-    this.onShowInfoModalFloors = this.onShowInfoModalFloors.bind(this);
-    this.onShowInfoModalRoof = this.onShowInfoModalRoof.bind(this);
-    this.onShowInfoModalFacade = this.onShowInfoModalFacade.bind(this);
-    this.onCloseInfoModal = this.onCloseInfoModal.bind(this);
-
-    this.onCalculate = this.onCalculate.bind(this);
-    this.onReturn = this.onReturn.bind(this);
-
     this.state = {
       showModal: false,
 
+      inputFloorAmount: '',
       inputWallWidth: '0.3',
       inputPercentageOpen: '20',
       inputFloorHeight: '0.3',
@@ -214,15 +190,16 @@ class ScreenProperties extends Component {
     return (
       <div>
         <div className='container vh-100'>
-          <div className='row padding-top-3 text-center'>
+          <div className='row padding-top-1'><LanguageSelector></LanguageSelector></div>
+          <div className='row padding-top-3 text-center'>            
             <h2>{this.props.buildingInfo.street} {this.props.buildingInfo.number}</h2>
-            <h5>{this.props.buildingInfo.postal}, {this.props.buildingInfo.city}</h5>
+            <h5>{this.props.buildingInfo.postal}, {this.props.buildingInfo.city}</h5>            
           </div>
           <div className='row padding-top-4'>
             <div className='col'>
               <h4>{t('section_geometry')}
-                <InfoModal show={this.state.showModalGeometry} onCloseInfoModal={this.onCloseInfoModal} title={t('section_geometry')} text={t('info_geometry')} closeMessage={t('button_close')}></InfoModal>
-                <button onClick={this.onShowInfoModalGeometry}><img alt='Toon meer informatie' className='info-img' src={image} height={25} width={25}></img></button>
+                <InfoModal show={this.state.showModalGeometry} onCloseInfoModal={this.onCloseInfoModal.bind(this)} title={t('section_geometry')} text={t('info_geometry')} closeMessage={t('button_close')}></InfoModal>
+                <button onClick={this.onShowInfoModalGeometry.bind(this)}><img alt='Toon meer informatie' className='info-img' src={image} height={25} width={25}></img></button>
               </h4>
             </div>
           </div>
@@ -239,7 +216,7 @@ class ScreenProperties extends Component {
               <div className='col'>
                 <label>{t('label_height')}</label>
                 <div className={this.state.inputHeight.length > 2 ? 'suffix-longer' : 'suffix'}>m</div>
-                <input type='number' min='0' max='200' step='0.1' value={this.state.inputHeight} onChange={this.onChangeHeight} name="input-height" className="form-control" onKeyDown={ (evt) => evt.key === 'e' && evt.preventDefault() }/>
+                <input type='number' min='0' max='200' step='0.1' value={this.state.inputHeight} onChange={this.onChangeHeight.bind(this)} name="input-height" className="form-control" onKeyDown={ (evt) => evt.key === 'e' && evt.preventDefault() }/>
               </div>
             </div>
           }
@@ -258,17 +235,17 @@ class ScreenProperties extends Component {
           <div className='row padding-top-1'>
             <div className='col'>
               <label>{t('label_buildinglayers')}</label>
-              <input type='number' min='0' max='99' step='1' value={this.state.inputFloorAmount} onChange={this.onChangeFloorAmount} name="input-floorAmount" className="form-control"/>
+              <input type='number' min='0' max='99' step='1' value={this.state.inputFloorAmount} onChange={this.onChangeFloorAmount.bind(this)} name="input-floorAmount" className="form-control"/>
             </div>
           </div>
           <div className='row padding-top-4'>
             <div className='col'>
               <h4>{t('section_walls')}
-                <InfoModal show={this.state.showModalWalls} onCloseInfoModal={this.onCloseInfoModal} title={t('section_walls')} text={t('info_walls')} closeMessage={t('button_close')}></InfoModal>
-                <button onClick={this.onShowInfoModalWalls}><img alt='Toon meer informatie' className='info-img' src={image} height={25} width={25}></img></button>
+                <InfoModal show={this.state.showModalWalls} onCloseInfoModal={this.onCloseInfoModal.bind(this)} title={t('section_walls')} text={t('info_walls')} closeMessage={t('button_close')}></InfoModal>
+                <button onClick={this.onShowInfoModalWalls.bind(this)}><img alt='Toon meer informatie' className='info-img' src={image} height={25} width={25}></img></button>
               </h4>
               <label>{t('label_construction_walls')}</label>
-              <select onChange={this.onChangeWallType} className="form-control custom-select" name="input-wallType" id='input-wallType'>
+              <select onChange={this.onChangeWallType.bind(this)} className="form-control custom-select" name="input-wallType" id='input-wallType'>
                 <option value=''></option>
                 <option value='Beton'>Beton</option>
                 <option value='Staal'>Staal</option>
@@ -279,24 +256,24 @@ class ScreenProperties extends Component {
               <h4> ‌‌ </h4>
               <label>{t('label_thickness')}</label>
               <div className='suffix-longer'>m</div>
-              <input type='number' min='0.0' max='5.0' step='0.1' value={this.state.inputWallWidth} onChange={this.onChangeWallWidth} name="input-wallWidth" id='input-wallWidth' className="form-control"/>
+              <input type='number' min='0.0' max='5.0' step='0.1' value={this.state.inputWallWidth} onChange={this.onChangeWallWidth.bind(this)} name="input-wallWidth" id='input-wallWidth' className="form-control"/>
             </div>
           </div>
           <div className='row padding-top-1'>
             <div className='col'>
               <label>{t('label_percentage_open_walls')}</label>
               <div className='suffix'>%</div>
-              <input type='number' min='0' max='99' step='1' value={this.state.inputPercentageOpen} onChange={this.onChangePercentageOpen} name="input-percentageOpen" id='input-percentageOpen' className="form-control"/>
+              <input type='number' min='0' max='99' step='1' value={this.state.inputPercentageOpen} onChange={this.onChangePercentageOpen.bind(this)} name="input-percentageOpen" id='input-percentageOpen' className="form-control"/>
             </div>
           </div>
           <div className='row padding-top-4'>
             <div className='col'>
               <h4>{t('section_floors')}
-                <InfoModal show={this.state.showModalFloors} onCloseInfoModal={this.onCloseInfoModal} title={t('section_floors')} text={t('info_floors')} closeMessage={t('button_close')}></InfoModal>
-                <button onClick={this.onShowInfoModalFloors}><img alt='Toon meer informatie' className='info-img' src={image} height={25} width={25}></img></button>
+                <InfoModal show={this.state.showModalFloors} onCloseInfoModal={this.onCloseInfoModal.bind(this)} title={t('section_floors')} text={t('info_floors')} closeMessage={t('button_close')}></InfoModal>
+                <button onClick={this.onShowInfoModalFloors.bind(this)}><img alt='Toon meer informatie' className='info-img' src={image} height={25} width={25}></img></button>
               </h4>
               <label>{t('label_construction_floors')}</label>
-              <select onChange={this.onChangeFloorType} className="form-control custom-select" name="input-floorType" id='input-floorType'>
+              <select onChange={this.onChangeFloorType.bind(this)} className="form-control custom-select" name="input-floorType" id='input-floorType'>
                 <option value=''></option>
                 <option value='Beton'>Beton</option>
                 <option value='Hout'>Hout</option>
@@ -306,17 +283,17 @@ class ScreenProperties extends Component {
               <h4> ‌‌ </h4>
               <label>{t('label_thickness')}</label>
               <div className='suffix-longer'>m</div>
-              <input type='number' min='0.0' max='5.0' step='0.1' value={this.state.inputFloorHeight} onChange={this.onChangeFloorHeight} name="input-floorHeight" id='input-floorHeight' className="form-control"/>
+              <input type='number' min='0.0' max='5.0' step='0.1' value={this.state.inputFloorHeight} onChange={this.onChangeFloorHeight.bind(this)} name="input-floorHeight" id='input-floorHeight' className="form-control"/>
             </div>
           </div>
           <div className='row padding-top-4'>
             <div className='col'>
               <h4>{t('section_roof')}
-                <InfoModal show={this.state.showModalRoof} onCloseInfoModal={this.onCloseInfoModal} title={t('section_roof')} text={t('info_roof')} closeMessage={t('button_close')}></InfoModal>
-                <button onClick={this.onShowInfoModalRoof}><img alt='Toon meer informatie' className='info-img' src={image} height={25} width={25}></img></button>
+                <InfoModal show={this.state.showModalRoof} onCloseInfoModal={this.onCloseInfoModal.bind(this)} title={t('section_roof')} text={t('info_roof')} closeMessage={t('button_close')}></InfoModal>
+                <button onClick={this.onShowInfoModalRoof.bind(this)}><img alt='Toon meer informatie' className='info-img' src={image} height={25} width={25}></img></button>
               </h4>
               <label>{t('label_construction_roof')}</label>
-              <select onChange={this.onChangeRoofType} className="form-control custom-select" name="input-roofType" id='input-roofType'>
+              <select onChange={this.onChangeRoofType.bind(this)} className="form-control custom-select" name="input-roofType" id='input-roofType'>
                 <option value=''></option>
                 <option value='Beton'>Beton</option>
                 <option value='Hout'>Hout</option>
@@ -326,17 +303,17 @@ class ScreenProperties extends Component {
               <h4> ‌‌ </h4>
               <label>{t('label_thickness')}</label>
               <div className='suffix-longer'>m</div>
-              <input type='number' min='0.0' max='5.0' step='0.1' value={this.state.inputRoofHeight} onChange={this.onChangeRoofHeight} name="input-roofHeight" id='input-roofHeight' className="form-control"/>
+              <input type='number' min='0.0' max='5.0' step='0.1' value={this.state.inputRoofHeight} onChange={this.onChangeRoofHeight.bind(this)} name="input-roofHeight" id='input-roofHeight' className="form-control"/>
             </div>
           </div>
           <div className='row padding-top-4'>
             <div className='col'>
               <h4>{t('section_facade')}
-                <InfoModal show={this.state.showModalFacade} onCloseInfoModal={this.onCloseInfoModal} title={t('section_facade')} text={t('info_facade')} closeMessage={t('button_close')}></InfoModal>
-                <button onClick={this.onShowInfoModalFacade}><img alt='Toon meer informatie' className='info-img' src={image} height={25} width={25}></img></button>
+                <InfoModal show={this.state.showModalFacade} onCloseInfoModal={this.onCloseInfoModal.bind(this)} title={t('section_facade')} text={t('info_facade')} closeMessage={t('button_close')}></InfoModal>
+                <button onClick={this.onShowInfoModalFacade.bind(this)}><img alt='Toon meer informatie' className='info-img' src={image} height={25} width={25}></img></button>
               </h4>
               <label>{t('label_cladding_facade')}</label>
-              <select onChange={this.onChangeFacadeType} className="form-control custom-select" name="input-facadeType" id='input-facadeType'>
+              <select onChange={this.onChangeFacadeType.bind(this)} className="form-control custom-select" name="input-facadeType" id='input-facadeType'>
                 <option value=''></option>
                 <option value='Beton'>Beton</option>
                 <option value='Staal'>Staal</option>
@@ -350,13 +327,13 @@ class ScreenProperties extends Component {
               <h4> ‌‌ </h4>
               <label>{t('label_thickness')}</label>
               <div className='suffix-longer'>m</div>
-              <input type='number' min='0.0' max='5.0' step='0.1' value={this.state.inputFacadeWidth} onChange={this.onChangeFacadeWidth} name="input-facadeWidth" id='input-facadeWidth' className="form-control"/>
+              <input type='number' min='0.0' max='5.0' step='0.1' value={this.state.inputFacadeWidth} onChange={this.onChangeFacadeWidth.bind(this)} name="input-facadeWidth" id='input-facadeWidth' className="form-control"/>
             </div>
           </div>
           <div className='row padding-top-3'>
             <div className='col'>
-              <Button id='btn-back' variant="outline-primary" onClick={this.onReturn}>{t('button_back')}</Button>
-              <Button id='btn-continue' variant="primary" onClick={this.onCalculate}>{t('button_calculate')}</Button>
+              <Button id='btn-back' variant="outline-primary" onClick={this.onReturn.bind(this)}>{t('button_back')}</Button>
+              <Button id='btn-continue' variant="primary" onClick={this.onCalculate.bind(this)}>{t('button_calculate')}</Button>
             </div>
           </div>
           <div className='padding-bottom-2'></div>

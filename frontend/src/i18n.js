@@ -6,7 +6,7 @@ i18n
   .use(Backend)
   .use(initReactI18next)
   .init({
-    lng: 'en',
+    lng: window.localStorage.i18nextLng || 'nl',
     backend: {
       loadPath: `${process.env.PUBLIC_URL}/locales/{{ns}}/{{lng}}.json`
     },

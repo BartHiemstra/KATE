@@ -33,9 +33,11 @@
     "floors": "Vloeren",
     "roof": "Dak",
     "facade_cladding": "Gevelbekleding",
+    "table_constructionElement": "Constructie-element",
     "table_material": "Materiaal",
-    "table_mass": "Massa",
+    "table_mass": "Hoeveelheid",
     "table_residualvalue": "Restwaarde",
+    "table_residualvalueRounded": "Afgerond",
 
     "metric_ton": "ton",
 
