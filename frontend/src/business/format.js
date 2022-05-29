@@ -14,7 +14,7 @@ export function formatEuros(value, roundAmount) {
     var formattedValue;
 
     // If roundAmount is zero, do not round at all.
-    if(roundAmount == 0)
+    if(roundAmount === 0)
         formattedValue = parseFloat(value).toFixed(2);
     // Else, round to nearest amount of the value of roundAmount.
     else
