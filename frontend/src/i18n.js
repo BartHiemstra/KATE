@@ -11,7 +11,7 @@ i18n
       loadPath: `${process.env.PUBLIC_URL}/locales/{{ns}}/{{lng}}.json`
     },
     fallbackLng: 'en',
-    debug: true,
+    debug: false,
     ns: ['translations'],
     defaultNS: 'translations',
     keySeparator: false,

@@ -3,6 +3,8 @@ import { Button } from 'react-bootstrap';
 import { withTranslation } from 'react-i18next'
 import axios from 'axios';
 
+import { GetResidualValue } from '../../../business/requests.js';
+
 import image from '../../../assets/images/icon_info.png';
 import InfoModal from '../../modal/info_modal.component';
 import LanguageSelector from '../../header/language_selector.component';
@@ -138,6 +140,7 @@ class ScreenProperties extends Component {
   }
 
   onCalculate() {
+    // Put userinput into an object.
     var inputValues = {
       height: this.props.buildingInfo.height > 0 ? this.props.buildingInfo.height : this.state.inputHeight,
       length: this.props.buildingInfo.length,
@@ -154,32 +157,16 @@ class ScreenProperties extends Component {
       facadeWidth: this.state.inputFacadeWidth
     }
 
-    axios.get(API_BASE_URL + 'calculation/calculate', { 
-      params: {
-        height: inputValues.height,
-        length: inputValues.length,
-        area: inputValues.area,
-        floorAmount: inputValues.floorAmount,
-        wallType: inputValues.wallType,
-        wallWidth: inputValues.wallWidth,
-        percentageOpen: inputValues.percentageOpen,
-        floorType: inputValues.floorType,
-        floorHeight: inputValues.floorHeight,
-        roofType: inputValues.roofType,
-        roofHeight: inputValues.roofHeight,
-        facadeType: inputValues.facadeType,
-        facadeWidth: inputValues.facadeWidth
-    }})
-    .then(response => {        
-        // On success, pass the building value to parent class then call for Results screen.
+    // Send GET-request to API through business layer, then pass info to parent class and call for next screen.
+    GetResidualValue(inputValues).then(residualValue => {
         this.props.saveInputValues(inputValues);
-        this.props.setResidualValue(response.data)
+        this.props.setResidualValue(residualValue)
         this.props.showComponent('Results')
-    })
-    .catch(error => console.log(error));
+    });
   }
 
-  onReturn() {
+  // Return to previous screen.
+  onBack() {
     this.props.showComponent('Address')
   }
 
@@ -332,7 +319,7 @@ class ScreenProperties extends Component {
           </div>
           <div className='row padding-top-3'>
             <div className='col'>
-              <Button id='btn-back' variant="outline-primary" onClick={this.onReturn.bind(this)}>{t('button_back')}</Button>
+              <Button id='btn-back' variant="outline-primary" onClick={this.onBack.bind(this)}>{t('button_back')}</Button>
               <Button id='btn-continue' variant="primary" onClick={this.onCalculate.bind(this)}>{t('button_calculate')}</Button>
             </div>
           </div>

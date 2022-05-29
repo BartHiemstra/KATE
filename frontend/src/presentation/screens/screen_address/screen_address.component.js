@@ -16,6 +16,7 @@ class ScreenAddress extends Component {
     render() {
         // Retrieve i18n translation data.
         const { t } = this.props;
+        
         return (
             <div>
                 <div className='background-img'></div>

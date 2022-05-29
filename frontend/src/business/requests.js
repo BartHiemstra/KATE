@@ -28,7 +28,7 @@ export async function GetBuildingInfo(postalCode, houseNumber) {
     return buildingInfo;
 }
 
-export async function getResidualValue(inputValues) {
+export async function GetResidualValue(inputValues) {
     let residualValue = null;
 
     await axios.get(API_BASE_URL + 'calculation/calculate/', { 
@@ -44,8 +44,8 @@ export async function getResidualValue(inputValues) {
             floorHeight: inputValues.floorHeight,
             roofType: inputValues.roofType,
             roofHeight: inputValues.roofHeight,
-            facadeType: inputValues.inputFacadeType,
-            facadeWidth: inputValues.inputFacadeWidth
+            facadeType: inputValues.facadeType,
+            facadeWidth: inputValues.facadeWidth
     }})
     .then(response => {        
           residualValue = response.data;
